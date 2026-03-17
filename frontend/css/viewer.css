@@ -1,0 +1,46 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+/* MAIN LAYOUT */
+.container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* 3D VIEW TAKES MOST SPACE */
+#viewer {
+    flex: 1;
+    background: #0b0f1a;
+}
+
+/* SIDE PANEL */
+.panel {
+    width: 280px;
+    background: #111827;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.panel h2 {
+    margin-bottom: 10px;
+}
+
+.panel button {
+    padding: 10px;
+    border: none;
+    background: #ff6600;
+    color: white;
+    cursor: pointer;
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<link rel="icon" href="data:,">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EngineVerse</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+</head>
+
+
+<body>
+
+<div class="sidebar">
+
+<h2 class="logo">⚙ EngineVerse</h2>
+
+<a class="nav active">Home</a>
+<a class="nav">Engines</a>
+<a class="nav">Parts</a>
+<a class="nav">Compare</a>
+<a class="nav">About</a>
+
+</div>
+
+
+<div class="main">
+
+<h1 class="title">Dashboard</h1>
+
+
+<!-- STATS -->
+
+<div class="stats">
+
+<div class="stat red">
+<h3>Max Power</h3>
+<p>700 HP</p>
+</div>
+
+<div class="stat green">
+<h3>Efficiency</h3>
+<p>Inline 4</p>
+</div>
+
+<div class="stat blue">
+<h3>Cylinders</h3>
+<p>4 - 12</p>
+</div>
+
+<div class="stat yellow">
+<h3>RPM Range</h3>
+<p>600 - 9000</p>
+</div>
+
+</div>
+
+
+
+<!-- ENGINE SELECTOR -->
+
+<h2 class="section-title">Select Engine</h2>
+
+<div class="engines">
+
+<button class="engine-card v8" onclick="openEngine('v8')">
+<h3>V8 Engine</h3>
+<p>High performance</p>
+</button>
+
+<button class="engine-card i4">
+<h3>Inline 4</h3>
+<p>Fuel efficient</p>
+</button>
+
+<button class="engine-card v6">
+<h3>V6 Engine</h3>
+<p>Balanced power</p>
+</button>
+
+<button class="engine-card boxer">
+<h3>Boxer Engine</h3>
+<p>Low center of gravity</p>
+</button>
+
+</div>
+
+
+
+<!-- ENGINE COMPONENTS -->
+
+<h2 class="section-title">Engine Components</h2>
+
+<div class="components">
+
+<div class="component">Piston</div>
+<div class="component">Crankshaft</div>
+<div class="component">Camshaft</div>
+<div class="component">Valves</div>
+<div class="component">Spark Plug</div>
+<div class="component">Cylinder Block</div>
+<div class="component">Timing Belt</div>
+<div class="component">Oil Pump</div>
+
+</div>
+
+</div>
+
+<script>
+    function openEngine(engine){
+    window.location.href = engine + ".html";
+    }
+</script>
+
+</body>
+</html>

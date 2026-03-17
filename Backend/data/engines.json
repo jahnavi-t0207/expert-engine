@@ -1,0 +1,69 @@
+[
+  {
+    "id": 1,
+    "name": "V8 Engine",
+    "cylinders": 8,
+    "power": "High",
+    "efficiency": "Medium",
+    "advantages": [
+      "High power output",
+      "Smooth performance",
+      "Great for performance vehicles"
+    ],
+    "disadvantages": [
+      "High fuel consumption",
+      "Heavy",
+      "More complex design"
+    ],
+    "parts": [
+      "Pistons",
+      "Crankshaft",
+      "Camshaft",
+      "Spark Plugs",
+      "Valves"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Inline 4 Engine",
+    "cylinders": 4,
+    "power": "Medium",
+    "efficiency": "High",
+    "advantages": [
+      "Fuel efficient",
+      "Lightweight",
+      "Simple design"
+    ],
+    "disadvantages": [
+      "Lower power",
+      "More vibration"
+    ],
+    "parts": [
+      "Pistons",
+      "Crankshaft",
+      "Timing belt",
+      "Spark Plugs"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "V6 Engine",
+    "cylinders": 6,
+    "power": "Balanced",
+    "efficiency": "Balanced",
+    "advantages": [
+      "Good power",
+      "Compact compared to V8"
+    ],
+    "disadvantages": [
+      "More expensive",
+      "More complex than inline engines"
+    ],
+    "parts": [
+      "Pistons",
+      "Crankshaft",
+      "Camshaft",
+      "Valves"
+    ]
+  }
+]
