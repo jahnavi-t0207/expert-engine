@@ -51,6 +51,10 @@ window.openEngine = function(name){
 
     if(name === "V8 Engine"){
         window.location.href = "v8.html";
+    } else if (name === "Inline 4 Engine" || name === "Inline 4") {
+        window.location.href = "inline4.html";
+    } else if (name === "Inline 6 Engine" || name === "Inline 6") {
+        window.location.href = "inline6.html";
     }
 
 };

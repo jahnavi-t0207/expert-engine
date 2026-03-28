@@ -1,12 +1,94 @@
-# expert-engine
+# Revora // EngineVerse
+> **Premium Mechanical Scrollytelling & 3D Analytics Platform**
 
-## Overview 
+[![Hackathon Build v4.0](https://img.shields.io/badge/Build-v4.0-fbbf24?style=for-the-badge&logo=probot&logoColor=white)](file:///d:/CODES%20HERE/Revora/frontend/index.html)
+[![Tech Stack](https://img.shields.io/badge/Tech-Three.js%20|%20Vanilla%20JS-38bdf8?style=for-the-badge)](file:///d:/CODES%20HERE/Revora/frontend/about.html)
 
-Expert Engine is an educational web application designed to help mechanical engineering students understand machine components and their working mechanisms through interactive 3D models and visual explanations.
-The platform allows students to explore mechanical systems in a more interactive and practical way compared to traditional textbooks.
+**Revora** (formerly Expert Engine) is a high-fidelity educational dashboard designed to bridge the gap between complex mechanical engineering and intuitive, interactive learning. Built for the modern web, it utilizes **Three.js** to bring raw engine data to life through cinematic 3D scrollytelling.
 
-# How students can use this APP
-Students can use this application to study machine components visually and understand how different parts of a machine interact with each other. This platform provides 3D exploded views of machines, allowing students to explore individual components and understand their functions.
+---
 
-# The goal of this project
-The goal of this project is to make mechanical engineering concepts easier to understand by combining visual models and explanations in a single learnig platform. This helps students understand machine mechanisms more effectively than static diagrams or textbook images.
+## 🚀 Core Features
+
+### 1. Mission Control (Dashboard)
+The central nerve center of the platform. Featuring a "Bento-style" grid that tracks:
+*   **Real-time Metrics**: Mocked server RPM, system efficiency, and recorded power.
+*   **Quick Launch**: Fast access points to the primary 3D rendering sequences.
+*   **System Terminal**: An integrated hacker-style console for backend logging.
+
+### 2. 3D Scrollytelling Tours
+Inspired by premium product launches (Apple/Tesla), this feature uses the **Intersection Observer API** to synchronize text-based documentation with a live 3D viewer.
+*   **Automatic Highlights**: As you scroll through specific engine parts (Intake Manifold, Crankshaft), the 3D model automatically rotates and frames the component in real-time.
+*   **Available Models**: V8 Flagship, Inline 6 (Performance), and Inline 4 (Efficiency).
+
+### 3. Schematic Dictionary (Parts Library)
+A "Blueprint" style library containing detailed analysis of engine components.
+*   **Interactive Flip Cards**: Built with CSS 3D Transforms, each card flips to reveal high-level technical specifications and "System Type" categorizations.
+*   **Dynamic Loading**: Optimized for performance, loading full schematic modules only when requested.
+
+### 4. Comparison Duel
+A data-driven tool to pit different engine configurations against each other.
+*   **Categorical Analytics**: Compare Power, Weight, Maintenance, and Complexity.
+*   **Victory Algorithm**: Automatically calculates the winner based on selected performance metrics.
+
+---
+
+## 🛠 Tech Stack
+
+| Layer | Technology |
+|---|---|
+| **Structure** | Semantic HTML5 |
+| **Styling** | Vanilla CSS3 (Custom Properties, Glassmorphism, 3D Transforms) |
+| **3D Rendering** | **Three.js** (WebGL 2.0) |
+| **Logic** | ES6+ Modules, Intersection Observer API |
+| **Models** | Compressed GLB (glTF 2.0) |
+
+---
+
+## 📦 Getting Started
+
+### Prerequisites
+*   A modern web browser with **WebGL 2.0** support (Chrome, Edge, Firefox).
+*   A local development server (e.g., Live Server, Python `http.server`, or Node `http-server`).
+
+### Installation
+1.  Clone the repository:
+    ```bash
+    git clone https://github.com/your-repo/revora.git
+    ```
+2.  Navigate to the directory:
+    ```bash
+    cd revora/frontend
+    ```
+3.  Launch with a local server:
+    ```bash
+    # using Python
+    python -m http.server 8000
+    ```
+4.  Open `http://localhost:8000` in your browser.
+
+---
+
+## 🎨 Design Language
+Revora follows a **Premium Industrial** aesthetic:
+*   **Colors**: Deep Obsidian (#020617), Electric Blue (#38bdf8), and Mechanical Bronze (#fbbf24).
+*   **Glassmorphism**: Backdrop filters (blur 16px) with translucent borders for a high-tech "Blueprint" feel.
+*   **Animations**: Smooth cubic-bezier transitions for all navigation and card interactions.
+
+---
+
+## 👥 Meet the Team
+**Team Code Jammers**
+*   **Hackathon Build**: v4.0 (Finalized Branding)
+*   **Mission**: Making mechanical engineering accessible through visual excellence.
+
+---
+
+> [!IMPORTANT]
+> **Performance Note**: For the best 3D Experience, ensure hardware acceleration is enabled in your browser settings.
+
+> [!TIP]
+> Use the **Compare** tool to understand why the **Boxer Engine** offers a lower center of gravity compared to traditional **V-Type** layouts.
+
+---
+*Created for the 2026 Engineering Hackathon.*

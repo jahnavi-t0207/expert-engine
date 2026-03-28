@@ -1,46 +1,165 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* APPLE-STYLE SCROLLYTELLING VIEWER */
+
+body.scrolly-body {
+  margin: 0;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Outfit', sans-serif;
 }
 
-body {
-    overflow: hidden;
-    font-family: Arial, sans-serif;
+.floating-back {
+  position: fixed;
+  top: 30px;
+  left: 40px;
+  z-index: 1000;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 1px;
+  background: rgba(10, 14, 23, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 12px 24px;
+  border-radius: 30px;
+  border: 1px solid var(--glass-border);
+  transition: all 0.3s;
 }
 
-/* MAIN LAYOUT */
-.container {
-    display: flex;
-    width: 100vw;
-    height: 100vh;
+.floating-back:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  transform: translateY(-2px);
 }
 
-/* 3D VIEW TAKES MOST SPACE */
-#viewer {
-    flex: 1;
-    background: #616e93;
+.scrolly-layout {
+  display: flex;
+  width: 100%;
+  position: relative;
+  align-items: flex-start; /* CRITICAL: Prevents sticky element from stretching */
 }
 
-/* SIDE PANEL */
-.panel {
-    width: 280px;
-    background: #252628;
-    color: rgb(251, 248, 248);
-    padding: 20px;
-    display: flex;
+/* 3D Model stays locked */
+.sticky-3d {
+  position: sticky;
+  top: 0;
+  width: 60vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, #111827 0%, #030712 100%);
+  border-right: 1px solid var(--glass-border);
+  box-shadow: 10px 0 50px rgba(0,0,0,0.5);
+  z-index: 10;
+}
+
+.canvas-container {
+  width: 100%;
+  height: 100%;
+}
+
+.canvas-container canvas {
+  display: block;
+  outline: none;
+}
+
+/* Scrolling Text Area */
+.scrolly-content {
+  width: 40vw;
+  position: relative;
+  z-index: 5;
+  background: var(--bg-primary);
+  /* The padding offsets the text beautifully into the center of the right screen */
+  padding: 0 10%;
+}
+
+.story-card {
+  min-height: 70vh; /* Reduced from 100vh so scrolling is faster */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 0;
+  opacity: 0.3;
+  transform: scale(0.95);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  border-bottom: 1px solid transparent; /* prevents collapsing margins */
+}
+
+/* Active Story Card highlighting */
+.story-card.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Typography Inside Story Cards */
+.story-card h2 {
+  font-size: 48px;
+  font-weight: 700;
+  margin: 0 0 20px 0;
+  background: linear-gradient(to right, #ffffff, #94A3B8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+}
+
+.intro h1 {
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.step-num {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--blue);
+  letter-spacing: 3px;
+  margin-bottom: 15px;
+}
+
+.card-desc p {
+  font-size: 20px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 25px;
+}
+
+.card-desc b {
+  color: #fff;
+  font-weight: 600;
+}
+
+.scroll-indicator {
+  margin-top: 50px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 14px;
+}
+
+.mouse-icon {
+  font-size: 24px;
+  animation: scrollBounce 2s infinite;
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+@media (max-width: 900px) {
+  .scrolly-layout {
     flex-direction: column;
-    justify-content: space-between;
-}
-
-.panel h2 {
-    margin-bottom: 10px;
-}
-
-.panel button {
-    padding: 10px;
-    border: none;
-    background: #3e4f05;
-    color: white;
-    cursor: pointer;
+  }
+  .sticky-3d {
+    width: 100vw;
+    height: 60vh;
+  }
+  .scrolly-content {
+    width: 100vw;
+    padding: 0 5%;
+  }
+  .story-card {
+    min-height: 80vh;
+  }
 }

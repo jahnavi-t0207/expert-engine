@@ -1,98 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<link rel="icon" href="data:,">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Engines</title>
-
-<link rel="stylesheet" href="css/style.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revora - Engines</title>
+  <link rel="icon" href="assets/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
 
 <div class="sidebar">
-
-<h2 class="logo">EngineVerse</h2>
-
-<a href="index.html">Home</a>
-<a href="engines.html">Engines</a>
-<a href="parts.html">Parts</a>
-
+  <div class="logo-area">
+    <a href="index.html">
+      <img src="assets/logo.png" alt="Revora Logo" class="logo-img">
+    </a>
+    <div class="logo-sub">Hackathon Build v4.0</div>
+  </div>
+  <a class="nav" href="index.html">🏠 Home</a>
+  <a class="nav active" href="engines.html">🔧 Engines</a>
+  <a class="nav" href="parts.html">⚙️ Parts</a>
+  <a class="nav" href="compare.html">⚖️ Compare</a>
+  <a class="nav" href="about.html">ℹ️ About</a>
 </div>
-
 
 <div class="main">
+  <div class="page-header">
+    <div class="page-tag">ENGINES</div>
+    <h1 class="title">Engine Types</h1>
+    <p>Detailed specs, advantages, and engineering breakdown of major engine configurations.</p>
+  </div>
 
-<h1>Engine Types</h1>
+  <div class="engine-grid">
 
-<div class="engine-grid">
+    <!-- V8 -->
+    <div class="engine-detail-card">
+      <div class="card-top" style="background:var(--purple)"></div>
+      <h3>V8 Engine</h3>
+      <div class="subtitle">V-TYPE · 8 CYLINDERS</div>
+      <div class="specs">
+        <div class="spec-item"><div class="lbl">Displacement</div><div class="val" style="color:var(--purple)">4.0–6.5L</div></div>
+        <div class="spec-item"><div class="lbl">Horsepower</div><div class="val" style="color:var(--purple)">400–700 HP</div></div>
+        <div class="spec-item"><div class="lbl">Cylinders</div><div class="val">8</div></div>
+        <div class="spec-item"><div class="lbl">Torque</div><div class="val">High</div></div>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Pros</h4>
+          <ul>
+            <li>High power output</li>
+            <li>Smooth performance</li>
+            <li>Great for performance</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Cons</h4>
+          <ul>
+            <li>High fuel consumption</li>
+            <li>Heavier design</li>
+            <li>More complex</li>
+          </ul>
+        </div>
+      </div>
+      <button class="explore-btn" onclick="window.location.href='v8.html'">🔍 Explore 3D Model →</button>
+    </div>
 
-<div class="engine-card">
-<h3>V8 Engine</h3>
-<p>Displacement: 4.0L – 6.5L</p>
-<p>Horsepower: 400 – 700 HP</p>
-<p>Cylinders: 8</p>
-<p>Arrangement: V</p>
-<p>Efficiency: Medium</p>
-<p>Torque: High</p>
-</div>
+    <!-- V6 -->
+    <div class="engine-detail-card">
+      <div class="card-top" style="background:var(--red)"></div>
+      <h3>V6 Engine</h3>
+      <div class="subtitle">V-TYPE · 6 CYLINDERS</div>
+      <div class="specs">
+        <div class="spec-item"><div class="lbl">Displacement</div><div class="val" style="color:var(--red)">2.5–4.0L</div></div>
+        <div class="spec-item"><div class="lbl">Horsepower</div><div class="val" style="color:var(--red)">250–400 HP</div></div>
+        <div class="spec-item"><div class="lbl">Cylinders</div><div class="val">6</div></div>
+        <div class="spec-item"><div class="lbl">Efficiency</div><div class="val">Balanced</div></div>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Pros</h4>
+          <ul>
+            <li>Good power balance</li>
+            <li>Compact vs V8</li>
+            <li>Widely available</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Cons</h4>
+          <ul>
+            <li>More expensive than I4</li>
+            <li>More complex</li>
+          </ul>
+        </div>
+      </div>
+      <button class="explore-btn">Coming Soon</button>
+    </div>
 
-<div class="engine-card">
-<h3>V6 Engine</h3>
-<p>Displacement: 2.5L – 4.0L</p>
-<p>Horsepower: 250 – 400 HP</p>
-<p>Cylinders: 6</p>
-<p>Arrangement: V</p>
-<p>Efficiency: Balanced</p>
-<p>Torque: Medium</p>
-</div>
+    <!-- Inline 4 -->
+    <div class="engine-detail-card">
+      <div class="card-top" style="background:var(--blue)"></div>
+      <h3>Inline 4 Engine</h3>
+      <div class="subtitle">INLINE · 4 CYLINDERS</div>
+      <div class="specs">
+        <div class="spec-item"><div class="lbl">Displacement</div><div class="val" style="color:var(--blue)">1.5–2.5L</div></div>
+        <div class="spec-item"><div class="lbl">Horsepower</div><div class="val" style="color:var(--blue)">120–250 HP</div></div>
+        <div class="spec-item"><div class="lbl">Cylinders</div><div class="val">4</div></div>
+        <div class="spec-item"><div class="lbl">Efficiency</div><div class="val">High</div></div>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Pros</h4>
+          <ul>
+            <li>Fuel efficient</li>
+            <li>Lightweight</li>
+            <li>Simple design</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Cons</h4>
+          <ul>
+            <li>Lower power</li>
+            <li>More vibration</li>
+          </ul>
+        </div>
+      </div>
+      <button class="explore-btn" onclick="window.location.href='inline4.html'">🔍 Explore 3D Model →</button>
+    </div>
 
-<div class="engine-card">
-<h3>Inline 4</h3>
-<p>Displacement: 1.5L – 2.5L</p>
-<p>Horsepower: 120 – 250 HP</p>
-<p>Cylinders: 4</p>
-<p>Arrangement: Inline</p>
-<p>Efficiency: High</p>
-<p>Torque: Low</p>
-</div>
+    <!-- Inline 6 -->
+    <div class="engine-detail-card">
+      <div class="card-top" style="background:var(--yellow)"></div>
+      <h3>Inline 6 Engine</h3>
+      <div class="subtitle">INLINE · 6 CYLINDERS</div>
+      <div class="specs">
+        <div class="spec-item"><div class="lbl">Displacement</div><div class="val" style="color:var(--yellow)">3.0–3.8L</div></div>
+        <div class="spec-item"><div class="lbl">Horsepower</div><div class="val" style="color:var(--yellow)">300–500 HP</div></div>
+        <div class="spec-item"><div class="lbl">Cylinders</div><div class="val">6</div></div>
+        <div class="spec-item"><div class="lbl">Smoothness</div><div class="val">Very High</div></div>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Pros</h4>
+          <ul>
+            <li>Naturally balanced</li>
+            <li>Very smooth</li>
+            <li>High torque</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Cons</h4>
+          <ul>
+            <li>Long engine bay needed</li>
+            <li>Higher cost</li>
+          </ul>
+        </div>
+      </div>
+      <button class="explore-btn" onclick="window.location.href='inline6.html'">🔍 Explore 3D Model →</button>
+    </div>
 
-<div class="engine-card">
-<h3>Inline 6</h3>
-<p>Displacement: 3.0L – 3.8L</p>
-<p>Horsepower: 300 – 500 HP</p>
-<p>Cylinders: 6</p>
-<p>Arrangement: Inline</p>
-<p>Smoothness: Very High</p>
-<p>Efficiency: Medium</p>
-</div>
+    <!-- Boxer -->
+    <div class="engine-detail-card">
+      <div class="card-top" style="background:var(--green)"></div>
+      <h3>Boxer Engine</h3>
+      <div class="subtitle">FLAT · 4/6 CYLINDERS</div>
+      <div class="specs">
+        <div class="spec-item"><div class="lbl">Displacement</div><div class="val" style="color:var(--green)">2.0–3.6L</div></div>
+        <div class="spec-item"><div class="lbl">Horsepower</div><div class="val" style="color:var(--green)">200–400 HP</div></div>
+        <div class="spec-item"><div class="lbl">Cylinders</div><div class="val">4 or 6</div></div>
+        <div class="spec-item"><div class="lbl">CoG</div><div class="val">Very Low</div></div>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Pros</h4>
+          <ul>
+            <li>Low center of gravity</li>
+            <li>Balanced vibration</li>
+            <li>Good handling</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Cons</h4>
+          <ul>
+            <li>Wide layout</li>
+            <li>Hard to service</li>
+          </ul>
+        </div>
+      </div>
+      <button class="explore-btn">Coming Soon</button>
+    </div>
 
-<div class="engine-card">
-<h3>Boxer Engine</h3>
-<p>Displacement: 2.0L – 3.6L</p>
-<p>Horsepower: 200 – 400 HP</p>
-<p>Cylinders: 4 / 6</p>
-<p>Arrangement: Flat</p>
-<p>Center of Gravity: Low</p>
-<p>Efficiency: Medium</p>
-</div>
-
-<div class="engine-card">
-<h3>Rotary Engine</h3>
-<p>Displacement: 1.3L</p>
-<p>Horsepower: 200 – 300 HP</p>
-<p>Moving Parts: Few</p>
-<p>Arrangement: Rotary</p>
-<p>Smoothness: High</p>
-<p>Efficiency: Low</p>
-</div>
-
-</div>
-
+    <!-- Rotary -->
+    <div class="engine-detail-card">
+      <div class="card-top" style="background:var(--accent)"></div>
+      <h3>Rotary Engine</h3>
+      <div class="subtitle">WANKEL · ROTARY</div>
+      <div class="specs">
+        <div class="spec-item"><div class="lbl">Displacement</div><div class="val" style="color:var(--accent)">1.3L</div></div>
+        <div class="spec-item"><div class="lbl">Horsepower</div><div class="val" style="color:var(--accent)">200–300 HP</div></div>
+        <div class="spec-item"><div class="lbl">Moving Parts</div><div class="val">Very Few</div></div>
+        <div class="spec-item"><div class="lbl">Smoothness</div><div class="val">High</div></div>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Pros</h4>
+          <ul>
+            <li>High rev ceiling</li>
+            <li>Compact & light</li>
+            <li>Very smooth</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Cons</h4>
+          <ul>
+            <li>Poor fuel economy</li>
+            <li>High oil consumption</li>
+          </ul>
+        </div>
+      </div>
+      <button class="explore-btn">Coming Soon</button>
+    </div>
+  </div>
 </div>
 
 </body>

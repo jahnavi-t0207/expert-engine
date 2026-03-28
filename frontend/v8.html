@@ -1,36 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>V8 Engine Viewer</title>
-
-<link rel="stylesheet" href="css/viewer.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>V8 Engine - Scrollytelling</title>
+  <link rel="icon" href="assets/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/viewer.css">
 </head>
+<body class="scrolly-body">
 
-<body>
+  <a class="floating-back" href="engines.html">← Back to Dashboard</a>
+  <img src="assets/logo.png" style="position: fixed; top: 20px; right: 20px; width: 60px; z-index: 1000; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
 
-<div class="container">
-
-    <!-- 3D VIEW -->
-    <div id="viewer"></div>
-
-    <!-- SIDE PANEL -->
-    <div class="panel">
-        <h2>Engine Info</h2>
-        <p id="infoText">Click on parts to see details</p>
-
-        <button onclick="window.location.href='engines.html'">
-            ← Back
-        </button>
+  <div class="scrolly-layout">
+    
+    <!-- LEFT: STICKY 3D ENGINE -->
+    <div class="sticky-3d">
+      <div id="viewer" class="canvas-container" data-model="models/v8_engine.glb"></div>
     </div>
 
-</div>
+    <!-- RIGHT: SCROLLING STORY CARDS -->
+    <div class="scrolly-content">
+      
+      <!-- Intro Card -->
+      <section class="story-card intro" data-highlight="None">
+        <div class="page-tag" style="color: var(--blue);">GUIDED TOUR</div>
+        <h1 class="title" style="margin-top: 10px;">The Anatomy of a V8</h1>
+        <p class="subtitle" style="font-size: 18px; line-height: 1.6;">
+          Scroll down to visually explore exactly how air, fuel, and fire turn into raw rotational horsepower, from the very top of the engine straight down to the oil pan.
+        </p>
+        <div class="scroll-indicator">
+          <span>Scroll down to dissect</span>
+          <div class="mouse-icon">🖱️</div>
+        </div>
+      </section>
 
-<script type="module" src="js/main.js"></script>
+      <!-- 1. Intake Manifold -->
+      <section class="story-card" data-highlight="Intake Manifold">
+        <div class="step-num">01 / 12</div>
+        <h2>Intake Manifold</h2>
+        <div class="card-desc">
+          <p><b>Visual:</b> The wide, flat structure at the very top.</p>
+          <p><b>Function:</b> Distributes external air (or air-fuel mixture) cleanly into each cylinder's intake port. Air enters here before the entire combustion process begins.</p>
+        </div>
+      </section>
 
+      <!-- 2. Fuel Rail -->
+      <section class="story-card" data-highlight="Fuel Rail + Injectors">
+        <div class="step-num">02 / 12</div>
+        <h2>Fuel Rail & Injectors</h2>
+        <div class="card-desc">
+          <p><b>Visual:</b> The long strip sitting just below the intake.</p>
+          <p><b>Function:</b> Supplies a highly pressurized spray of fuel sequentially into each cylinder to mix perfectly with the air.</p>
+        </div>
+      </section>
+
+      <!-- 3. Cylinder Head -->
+      <section class="story-card" data-highlight="Cylinder Head">
+        <div class="step-num">03 / 12</div>
+        <h2>Cylinder Head</h2>
+        <div class="card-desc">
+          <p><b>Visual:</b> The large rectangular chunk under the intake assemblies.</p>
+          <p><b>Function:</b> Caps the top of the cylinders. This incredibly vital piece intricately houses the Valves, Camshaft, and Spark Plugs.</p>
+        </div>
+      </section>
+
+      <!-- 4. Camshaft -->
+      <section class="story-card" data-highlight="Camshaft">
+        <div class="step-num">04 / 12</div>
+        <h2>Camshaft</h2>
+        <div class="card-desc">
+          <p><b>Visual:</b> A rotating rod with lobes, housed inside the cylinder head.</p>
+          <p><b>Function:</b> Unlocks power delivery. It controls the mechanical rhythm of opening and closing the engine valves precisely on time.</p>
+        </div>
+      </section>
+
+      <!-- 5. Valves -->
+      <section class="story-card" data-highlight="Valves">
+        <div class="step-num">05 / 12</div>
+        <h2>Valves</h2>
+        <div class="card-desc">
+          <p><b>Visual:</b> Tiny metallic components located completely inside the cylinder head slots.</p>
+          <p><b>Function:</b> Allow the fresh air-fuel mixture to flow into the combustion chamber, and later pop open to release the burnt exhaust gases out.</p>
+        </div>
+      </section>
+
+      <!-- 6. Spark Plugs -->
+      <section class="story-card" data-highlight="Spark Plugs">
+        <div class="step-num">06 / 12</div>
+        <h2>Spark Plugs</h2>
+        <div class="card-desc">
+          <p><b>Visual:</b> Small vertical stems sticking down into the cylinder head.</p>
+          <p><b>Function:</b> Ignites the perfectly compressed air-fuel mixture with a high-voltage spark, causing the literal explosion that powers the car.</p>
+        </div>
+      </section>
+
+      <!-- 7. Cylinder Block -->
+      <section class="story-card" data-highlight="Cylinder Block">
+        <div class="step-num">07 / 12</div>
+        <h2>Cylinder Block</h2>
+        <div class="card-desc">
+          <p><b>Visual:</b> The massive V-shaped central body of the entire engine.</p>
+          <p><b>Function:</b> The main engine body framework containing the massive cylinders where the pistons slide violently up and down.</p>
+        </div>
+      </section>
+
+      <!-- 8. Pistons -->
+      <section class="story-card" data-highlight="Pistons">
+        <div class="step-num">08 / 12</div>
+        <h2>Pistons</h2>
+        <div class="card-desc">
+          <p><b>Visual:</b> Thick cylindrical slugs operating inside the block.</p>
+          <p><b>Function:</b> The core motion generator. They are shoved violently downwards by the combustion explosions, moving up and down to convert pure energy into kinetic motion.</p>
+        </div>
+      </section>
+
+      <!-- 9. Crankshaft -->
+      <section class="story-card" data-highlight="Crankshaft">
+        <div class="step-num">09 / 12</div>
+        <h2>Crankshaft</h2>
+        <div class="card-desc">
+          <p><b>Visual:</b> The heavy, long, offset rotating rod running along the bottom of the block.</p>
+          <p><b>Function:</b> The magical converter. It turns the vertical, linear piston movement into physical rotational motion—the direct force that ultimately spins your tires.</p>
+        </div>
+      </section>
+
+      <!-- 10. Timing Belt -->
+      <section class="story-card" data-highlight="Timing Belt / Timing Chain">
+        <div class="step-num">10 / 12</div>
+        <h2>Timing Belt / Chain</h2>
+        <div class="card-desc">
+          <p><b>Visual:</b> Located at the front of the engine, wrapping around gears.</p>
+          <p><b>Function:</b> The metronome. Directly connects the Crankshaft below to the Camshaft above, perfectly synchronizing piston movements with valve openings to prevent a catastrophic crash between the two.</p>
+        </div>
+      </section>
+
+      <!-- 11. Oil Pump -->
+      <section class="story-card" data-highlight="Oil Pump">
+        <div class="step-num">11 / 12</div>
+        <h2>Oil Pump</h2>
+        <div class="card-desc">
+          <p><b>Visual:</b> Seated at the lowest section near the front of the crankshaft.</p>
+          <p><b>Function:</b> The engine's heart. Sucks oil from the pan and circulates it under immense pressure to lubricate all the violently rubbing internal metal components.</p>
+        </div>
+      </section>
+
+      <!-- 12. Oil Pan -->
+      <section class="story-card" data-highlight="Oil Pan / Base Plate">
+        <div class="step-num">12 / 12</div>
+        <h2>Oil Pan / Base Plate</h2>
+        <div class="card-desc">
+          <p><b>Visual:</b> The flat, rectangular pan bolted directly under everything.</p>
+          <p><b>Function:</b> The reservoir block. Holds gallons of engine oil when the car is dormant, waiting for the pump to pick it up.</p>
+        </div>
+      </section>
+
+      <!-- Outro Card -->
+      <section class="story-card outro" data-highlight="None">
+        <h2>End of Tour</h2>
+        <p>You have successfully traced the entire path of air, fuel, and lubrication running throughout an internal combustion engine.</p>
+        <button class="explore-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="margin-top: 40px;">
+          ↑ Return to Top
+        </button>
+      </section>
+
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>

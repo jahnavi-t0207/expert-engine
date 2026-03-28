@@ -3,271 +3,165 @@ import { GLTFLoader } from "https://esm.sh/three/examples/jsm/loaders/GLTFLoader
 import { OrbitControls } from "https://esm.sh/three/examples/jsm/controls/OrbitControls.js";
 
 export function initViewer() {
+  const viewer = document.getElementById("viewer");
+  if (!viewer) return;
 
-const viewer = document.getElementById("viewer");
+  /* ---------- SCENE & CAMERA ---------- */
+  const scene = new THREE.Scene();
 
-/* ---------- SCENE ---------- */
+  const camera = new THREE.PerspectiveCamera(
+    60,
+    viewer.clientWidth / viewer.clientHeight,
+    0.1,
+    1000
+  );
 
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x0b0f1a);
+  /* ---------- RENDERER ---------- */
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(viewer.clientWidth, viewer.clientHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  viewer.appendChild(renderer.domElement);
 
-/* ---------- CAMERA ---------- */
+  /* ---------- CONTROLS ---------- */
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.05;
+  controls.enableZoom = true; // Allow user to zoom in and out
+  controls.enablePan = false;
 
-const camera = new THREE.PerspectiveCamera(
-75,
-viewer.clientWidth / viewer.clientHeight,
-0.1,
-1000
-);
+  /* ---------- LIGHTING ---------- */
+  scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+  const light = new THREE.DirectionalLight(0xffffff, 2);
+  light.position.set(10, 20, 10);
+  scene.add(light);
+  
+  const backLight = new THREE.DirectionalLight(0x38bdf8, 1);
+  backLight.position.set(-10, -10, -10);
+  scene.add(backLight);
 
-/* ---------- RENDERER ---------- */
+  /* ---------- MODEL & MAPPING CACHE ---------- */
+  let engineModel;
+  let activeTarget = "None";
 
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(viewer.clientWidth, viewer.clientHeight);
-viewer.appendChild(renderer.domElement);
+  const loader = new GLTFLoader();
+  
+  // Read model path from data attribute or fallback to V8
+  const modelPath = viewer.dataset.model || "models/v8_engine.glb";
 
-/* ---------- CONTROLS ---------- */
+  loader.load(modelPath, (gltf) => {
+    engineModel = gltf.scene;
 
-const controls = new OrbitControls(camera, renderer.domElement);
+    // 1. FILTER JUNK & APPLY MATERIALS
+    engineModel.traverse((child) => {
+      if (child.isMesh) {
+        const name = child.name.toLowerCase();
+        // Only hide VERY likely scaffolding (Spheres and Points)
+        // Keep Planes/Circles as they are often engine covers or bases
+        if (name.includes("sphere") || name.includes("point")) {
+           child.visible = false;
+        }
 
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
+        // Apply sleek metallic material
+        child.material = new THREE.MeshStandardMaterial({
+          color: child.material.color || new THREE.Color(0x888888),
+          metalness: 0.9,
+          roughness: 0.15,
+          envMapIntensity: 1
+        });
+      }
+    });
 
-let hoveredPart = null;
+    // 2. AUTO-ROTATE TO HORIZONTAL IF VERTICAL
+    let box = new THREE.Box3().setFromObject(engineModel);
+    let size = box.getSize(new THREE.Vector3());
+    
+    // Only rotate if height is significantly greater than length (vertical standing)
+    if (size.y > size.x * 1.5 && size.y > size.z) {
+      engineModel.rotation.z = Math.PI / 2;
+      box = new THREE.Box3().setFromObject(engineModel);
+      size = box.getSize(new THREE.Vector3());
+    }
 
-const partDescriptions = {
-"Piston": "Moves up and down to generate power.",
-"Crankshaft": "Converts linear motion to rotation.",
-"Camshaft": "Controls valve timing.",
-"Valve": "Controls air and exhaust flow."
-};
+    // 3. CENTER THE MODEL
+    const center = box.getCenter(new THREE.Vector3());
+    engineModel.position.x += (engineModel.position.x - center.x);
+    engineModel.position.y += (engineModel.position.y - center.y);
+    engineModel.position.z += (engineModel.position.z - center.z);
 
-/* ---------- LIGHT ---------- */
+    scene.add(engineModel);
 
-scene.add(new THREE.AmbientLight(0xffffff, 1));
+    // 4. DYNAMIC CAMERA FRAMING
+    // We want the model to fill roughly 70% of the screen
+    const maxDim = Math.max(size.x, size.y, size.z);
+    const fov = camera.fov * (Math.PI / 180);
+    let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
+    
+    // Add buffer and handle aspect ratio for wide engines
+    cameraZ *= 1.8; 
+    
+    camera.position.set(cameraZ * 0.8, cameraZ * 0.5, cameraZ * 0.8);
+    camera.lookAt(0, 0, 0);
+    
+    controls.target.set(0, 0, 0);
+    controls.update();
 
-const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(5, 10, 7);
-scene.add(light);
+    // 5. ENHANCED LIGHTING
+    const mainLight = new THREE.PointLight(0xffffff, 10);
+    camera.add(mainLight); // Light moves with camera
+    scene.add(camera);
+  });
 
-/* ---------- MODEL ---------- */
+  /* ---------- ANIMATION LOOP ---------- */
+  function animate() {
+    requestAnimationFrame(animate);
 
-let engineModel;
+    if (engineModel) {
+      // Very slow cinematic spin to view all angles
+      engineModel.rotation.y += 0.002;
+    }
 
-const loader = new GLTFLoader();
+    controls.update();
+    renderer.render(scene, camera);
+  }
+  
+  animate();
 
-loader.load("models/v8_engine.glb", (gltf) => {
+  /* ---------- RESIZE HANDLING ---------- */
+  window.addEventListener("resize", () => {
+    // Viewer is strictly tied to sticky left side DOM container
+    camera.aspect = viewer.clientWidth / viewer.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(viewer.clientWidth, viewer.clientHeight);
+  });
 
-engineModel = gltf.scene;
 
-// center model
-const box = new THREE.Box3().setFromObject(engineModel);
-const center = box.getCenter(new THREE.Vector3());
-engineModel.position.sub(center);
+  /* ---------- INTERSECTION OBSERVER (Scroll Spy) ---------- */
+  
+  const storyCards = document.querySelectorAll(".story-card");
+  
+  // Set up observer to track when text cards hit the middle of the screen
+  const observerOptions = {
+    root: null, // viewport
+    rootMargin: "-40% 0px -40% 0px", // Trigger active state strictly in the middle 20% of screen
+    threshold: 0
+  };
 
-scene.add(engineModel);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        
+        // Remove active class from all
+        storyCards.forEach(card => card.classList.remove("active"));
+        
+        // Add to the intersecting one
+        entry.target.classList.add("active");
+        
+        // Update the 3D target! (This updates the animate loop above)
+        activeTarget = entry.target.getAttribute("data-highlight");
+      }
+    });
+  }, observerOptions);
 
-// set camera properly
-camera.position.set(0, 3, 10);
-controls.target.set(0, 0, 0);
+  storyCards.forEach(card => observer.observe(card));
 
-});
-
-/* ---------- ANIMATION ---------- */
-
-function animate() {
-
-requestAnimationFrame(animate);
-
-if (engineModel) {
-engineModel.rotation.y += 0.002;
 }
-
-controls.update();
-renderer.render(scene, camera);
-
-}
-
-animate();
-
-/* ---------- RESIZE ---------- */
-
-window.addEventListener("resize", () => {
-
-camera.aspect = viewer.clientWidth / viewer.clientHeight;
-camera.updateProjectionMatrix();
-
-renderer.setSize(viewer.clientWidth, viewer.clientHeight);
-
-});
-
-window.addEventListener("mousemove", onMouseMove);
-
-function onMouseMove(event){
-
-const rect = renderer.domElement.getBoundingClientRect();
-
-mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-raycaster.setFromCamera(mouse, camera);
-
-const intersects = raycaster.intersectObjects(scene.children, true);
-
-if(intersects.length > 0){
-
-const object = intersects[0].object;
-
-/* remove old highlight */
-if(hoveredPart && hoveredPart.material && hoveredPart.material.emissive){
-hoveredPart.material.emissive.set(0x000000);
-}
-
-/* apply new highlight */
-if(object.material && object.material.emissive){
-object.material.emissive.set(0xff6600);
-object.material.emissiveIntensity = 1.5;
-}
-
-hoveredPart = object;
-
-updateInfo(object.name);
-
-}else{
-
-/* remove highlight when nothing hovered */
-if(hoveredPart && hoveredPart.material && hoveredPart.material.emissive){
-hoveredPart.material.emissive.set(0x000000);
-}
-
-hoveredPart = null;
-
-updateInfo("None");
-}
-
-}
-
-function updateInfo(name){
-
-const info = document.getElementById("infoText");
-
-if(!info) return;
-
-if(partDescriptions[name]){
-info.innerText = name + ": " + partDescriptions[name];
-}else if(name !== "None"){
-info.innerText = name + ": No data available";
-}else{
-info.innerText = "Hover over engine parts";
-}
-
-}
-
-}
-
-// import * as THREE from "https://esm.sh/three";
-// import { GLTFLoader } from "https://esm.sh/three/examples/jsm/loaders/GLTFLoader.js";
-// import { OrbitControls } from "https://esm.sh/three/examples/jsm/controls/OrbitControls.js";
-
-// export function initViewer(){
-
-// const viewer = document.getElementById("viewer");
-// if(!viewer) return;
-
-// /* ---------- SCENE ---------- */
-
-// const scene = new THREE.Scene();
-// scene.background = new THREE.Color(0x0b0f1a);
-
-// /* ---------- CAMERA ---------- */
-
-// const camera = new THREE.PerspectiveCamera(
-// 75,
-// viewer.clientWidth / viewer.clientHeight,
-// 0.1,
-// 1000
-// );
-
-// camera.position.set(0,2,8);
-
-// /* ---------- RENDERER ---------- */
-
-// const renderer = new THREE.WebGLRenderer({antialias:true});
-
-// renderer.setSize(viewer.clientWidth, viewer.clientHeight);
-// renderer.setPixelRatio(window.devicePixelRatio);
-
-// viewer.appendChild(renderer.domElement);
-
-// /* ---------- CONTROLS ---------- */
-
-// const controls = new OrbitControls(camera, renderer.domElement);
-// controls.enableDamping = true;
-
-// /* ---------- LIGHTING ---------- */
-
-// const light1 = new THREE.DirectionalLight(0xffffff,1);
-// light1.position.set(5,10,7);
-// scene.add(light1);
-
-// scene.add(new THREE.AmbientLight(0xffffff,0.6));
-// scene.add(new THREE.HemisphereLight(0xffffff,0x444444,1));
-
-// /* ---------- MODEL ---------- */
-
-// let engineModel;
-
-// const loader = new GLTFLoader();
-
-// loader.load("models/v8_engine.glb",(gltf)=>{
-
-// engineModel = gltf.scene;
-
-// engineModel.scale.set(4,4,4);
-
-// // CENTER + AUTO CAMERA
-// const box = new THREE.Box3().setFromObject(engineModel);
-// const size = box.getSize(new THREE.Vector3()).length();
-// const center = box.getCenter(new THREE.Vector3());
-
-// engineModel.position.sub(center);
-
-// scene.add(engineModel);
-
-// // better camera positioning
-// camera.position.set(center.x + size/2, center.y + size/4, center.z + size/2);
-// controls.target.copy(center);
-// controls.update();
-
-// });
-
-// /* ---------- ANIMATION ---------- */
-
-// function animate(){
-
-// requestAnimationFrame(animate);
-
-// if(engineModel){
-// engineModel.rotation.y += 0.003;
-// }
-
-// controls.update();
-
-// renderer.render(scene,camera);
-
-// }
-
-// animate();
-
-// /* ---------- RESIZE ---------- */
-
-// window.addEventListener("resize",()=>{
-
-// camera.aspect = viewer.clientWidth / viewer.clientHeight;
-// camera.updateProjectionMatrix();
-
-// renderer.setSize(viewer.clientWidth, viewer.clientHeight);
-
-// });
-
-// }
