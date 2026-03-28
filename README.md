@@ -54,7 +54,7 @@ A data-driven tool to pit different engine configurations against each other.
 ### Installation
 1.  Clone the repository:
     ```bash
-    git clone https://github.com/your-repo/revora.git
+    git clone https://github.com/vivekbabunaidu-lang/expert-engine
     ```
 2.  Navigate to the directory:
     ```bash
