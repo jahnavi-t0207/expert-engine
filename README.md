@@ -10,7 +10,7 @@ concepts into a visual and immersive learning experience using real-time 3D
 rendering, scroll-based storytelling, and performance analytics.
 
 ## Problem
-Mechanical engineering concepts—especially internal combustion engines—are
+Mechanical engineering concepts, especially internal combustion engines are
 difficult to understand using static diagrams and textbooks. Students often
 struggle to visualize:
 How engine components interact
@@ -21,8 +21,8 @@ Traditional learning methods lack interactivity and real-time visualization.
 
 ## Solution
 Revora solves this problem by combining:
-Real-time 3D engine visualization
-Scroll-based interactive storytelling
+Real time 3D engine visualization
+Scroll based interactive storytelling
 Engine analytics dashboard
 Engine comparison system
 This creates a learning experience where users see, interact, and analyze instead
