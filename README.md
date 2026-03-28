@@ -4,9 +4,30 @@
 [![Hackathon Build v4.0](https://img.shields.io/badge/Build-v4.0-fbbf24?style=for-the-badge&logo=probot&logoColor=white)](file:///d:/CODES%20HERE/Revora/frontend/index.html)
 [![Tech Stack](https://img.shields.io/badge/Tech-Three.js%20|%20Vanilla%20JS-38bdf8?style=for-the-badge)](file:///d:/CODES%20HERE/Revora/frontend/about.html)
 
-**Revora** (formerly Expert Engine) is a high-fidelity educational dashboard designed to bridge the gap between complex mechanical engineering and intuitive, interactive learning. Built for the modern web, it utilizes **Three.js** to bring raw engine data to life through cinematic 3D scrollytelling.
+Interactive 3D Mechanical Learning Platform
+Revora is an interactive web platform that transforms complex mechanical engine
+concepts into a visual and immersive learning experience using real-time 3D
+rendering, scroll-based storytelling, and performance analytics.
 
----
+## Problem
+Mechanical engineering concepts—especially internal combustion engines—are
+difficult to understand using static diagrams and textbooks. Students often
+struggle to visualize:
+How engine components interact
+How motion occurs inside engines
+Differences between engine configurations
+Performance trade-offs between engine types
+Traditional learning methods lack interactivity and real-time visualization.
+
+## Solution
+Revora solves this problem by combining:
+Real-time 3D engine visualization
+Scroll-based interactive storytelling
+Engine analytics dashboard
+Engine comparison system
+This creates a learning experience where users see, interact, and analyze instead
+of just reading theory.
+
 
 ## 🚀 Core Features
 
