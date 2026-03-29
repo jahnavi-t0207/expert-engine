@@ -24,6 +24,16 @@
     <div class="sticky-3d">
       <div id="viewer" class="canvas-container" data-model="models/v8_engine.glb"></div>
       
+      <!-- 3D CONTROL BAR -->
+      <div class="viewer-controls">
+        <button id="explode-btn" class="glass-btn">
+          <span class="btn-icon">💥</span> EXPLODED VIEW
+        </button>
+        <button id="rotate-btn" class="glass-btn active">
+          <span class="btn-icon">🔄</span> AUTO-ROTATE
+        </button>
+      </div>
+
       <!-- DIAGNOSTIC HUD OVERLAY -->
       <div id="part-hud" class="part-hud is-hidden">
         <div class="hud-header">
@@ -49,13 +59,17 @@
           Scroll down to visually explore exactly how air, fuel, and fire turn into raw rotational horsepower, from the very top of the engine straight down to the oil pan.
         </p>
         
-        <!-- SENSORY UPGRADE: REV ENGINE -->
+        <!-- SENSORY UPGRADE: ENGINE DRIVE SYSTEM -->
         <div class="rev-container" style="margin: 20px 0 40px;">
-          <button id="rev-btn" class="rev-btn">
-            <span class="rev-icon">🔊</span> REV ENGINE
-          </button>
-          <div class="rev-hint">Hold to high-RPM spin</div>
-          <audio id="engine-sound" src="assets/sounds/v8.mp3" loop></audio>
+          <div style="display: flex; gap: 15px;">
+            <button id="start-btn" class="rev-btn" style="border-color: var(--blue); color: var(--blue);">
+              <span class="rev-icon">⚡</span> START ENGINE
+            </button>
+            <button id="rev-btn" class="rev-btn" disabled>
+              <span class="rev-icon">🔊</span> REV BURST
+            </button>
+          </div>
+          <div class="rev-hint">Initialize ignition to enable throttle control</div>
         </div>
 
         <div class="scroll-indicator">

@@ -42,7 +42,7 @@ const PART_DATA = {
   "Pistons": {
     name: "High-Compression Pistons",
     desc: "Forces vertical motion via combustion explosions. They transfer thousand-pound loads to the crankshaft.",
-    meshKeywords: ["piston", "rod", "conrod", "wrist_pin"]
+    meshKeywords: ["piston", "piston_0", "rod", "conrod", "wrist_pin"]
   },
   "Crankshaft": {
     name: "Crankshaft",
@@ -99,7 +99,7 @@ export function initViewer() {
   controls.dampingFactor = 0.05;
   controls.rotateSpeed = 0.8;
 
-  /* ---------- GRID FLOOR (Visual Anchor) ---------- */
+  /* ---------- GRID FLOOR ---------- */
   const grid = new THREE.GridHelper(100, 50, 0x38bdf8, 0x1e293b);
   grid.position.y = -5;
   grid.material.opacity = 0.2;
@@ -122,15 +122,37 @@ export function initViewer() {
   let activeTarget = "None";
   let isRevving = false;
   let isUserInteracting = false;
+  let isAutoRotating = true;
+  let isExploded = false;
   let currentSpinSpeed = 0.002;
   let highlightedMesh = null;
   let originalMaterial = null;
 
+  const initialPositions = new Map();
+
   controls.addEventListener('start', () => { isUserInteracting = true; });
   controls.addEventListener('end', () => { 
-    // Wait a bit before resuming auto-spin
     setTimeout(() => { isUserInteracting = false; }, 1000); 
   });
+
+  /* ---------- BUTTON LISTENERS ---------- */
+  const explodeBtn = document.getElementById("explode-btn");
+  const rotateBtn = document.getElementById("rotate-btn");
+
+  if (explodeBtn) {
+    explodeBtn.addEventListener("click", () => {
+      isExploded = !isExploded;
+      explodeBtn.classList.toggle("active", isExploded);
+      toggleExplodedView();
+    });
+  }
+
+  if (rotateBtn) {
+    rotateBtn.addEventListener("click", () => {
+      isAutoRotating = !isAutoRotating;
+      rotateBtn.classList.toggle("active", isAutoRotating);
+    });
+  }
 
   /* ---------- MODEL LOADING ---------- */
   const loader = new GLTFLoader();
@@ -140,6 +162,7 @@ export function initViewer() {
     engineModel = gltf.scene;
     engineModel.traverse((child) => {
       if (child.isMesh) {
+        initialPositions.set(child.uuid, child.position.clone());
         child.material = new THREE.MeshStandardMaterial({
           color: child.material.color || new THREE.Color(0x888888),
           metalness: 0.9,
@@ -159,19 +182,49 @@ export function initViewer() {
     camera.lookAt(0, 0, 0);
 
     if (spinner) spinner.remove();
+
+    // Deep link support
+    const urlParams = new URLSearchParams(window.location.search);
+    const targetPart = urlParams.get('part');
+    if (targetPart) {
+      setTimeout(() => {
+        engineModel.traverse(c => {
+          if (c.isMesh) {
+            const data = getPartDataByMeshName(c);
+            if (data && data.name.toLowerCase().includes(targetPart.toLowerCase())) {
+              highlightMesh(c);
+              showHUD(data);
+            }
+          }
+        });
+      }, 500);
+    }
   });
 
   /* ---------- INTERACTION FUNCTIONS ---------- */
+  function toggleExplodedView() {
+    if (!engineModel) return;
+    engineModel.traverse(child => {
+      if (child.isMesh) {
+        const initialPos = initialPositions.get(child.uuid);
+        if (!initialPos) return;
+        if (isExploded) {
+          const offset = initialPos.clone().normalize().multiplyScalar(1.5);
+          child.userData.targetPos = initialPos.clone().add(offset);
+        } else {
+          child.userData.targetPos = initialPos.clone();
+        }
+      }
+    });
+  }
+
   function getPartDataByMeshName(mesh) {
     if (!mesh) return null;
-    
-    // Check the mesh name, and its parent names (for sub-assembled parts)
     const namesToTest = [
       mesh.name.toLowerCase(),
       mesh.parent ? mesh.parent.name.toLowerCase() : "",
       mesh.parent && mesh.parent.parent ? mesh.parent.parent.name.toLowerCase() : ""
     ];
-
     for (const key in PART_DATA) {
       if (PART_DATA[key].meshKeywords.some(kw => namesToTest.some(name => name.includes(kw)))) {
         return PART_DATA[key];
@@ -182,14 +235,16 @@ export function initViewer() {
 
   function highlightMesh(mesh) {
     if (highlightedMesh === mesh) return;
-    if (highlightedMesh && originalMaterial) highlightedMesh.material = originalMaterial;
+    if (highlightedMesh && originalMaterial) {
+       highlightedMesh.material = originalMaterial;
+    }
     if (mesh) {
       highlightedMesh = mesh;
       originalMaterial = mesh.material.clone();
       mesh.material = new THREE.MeshStandardMaterial({
         color: new THREE.Color(0x38bdf8),
         emissive: new THREE.Color(0x38bdf8),
-        emissiveIntensity: 0.6,
+        emissiveIntensity: 0.8,
         metalness: 1, roughness: 0.1
       });
     } else {
@@ -208,41 +263,49 @@ export function initViewer() {
     }
   }
 
-  function handleInteraction(event) {
+  function handleInteraction(event, isClick = false) {
     const rect = renderer.domElement.getBoundingClientRect();
     mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
     mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
     raycaster.setFromCamera(mouse, camera);
     const intersects = raycaster.intersectObjects(scene.children, true);
-
     if (intersects.length > 0) {
-      const clickedMesh = intersects[0].object;
-      console.log("DEBUG: You clicked on mesh named:", clickedMesh.name); // IDENTIFYING MESHES
-      
-      const data = getPartDataByMeshName(clickedMesh);
+      const targetMesh = intersects[0].object;
+      const data = getPartDataByMeshName(targetMesh);
       if (data) {
-        highlightMesh(clickedMesh);
-        showHUD(data);
-        const section = Array.from(document.querySelectorAll(".story-card"))
-          .find(c => c.getAttribute("data-highlight") === data.name);
-        if (section) section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        highlightMesh(targetMesh);
+        if (isClick) {
+          showHUD(data);
+          const section = Array.from(document.querySelectorAll(".story-card"))
+            .find(c => c.getAttribute("data-highlight") === data.name);
+          if (section) section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
       }
     } else {
-      highlightMesh(null);
-      showHUD(null);
+      if (isClick) {
+        highlightMesh(null);
+        showHUD(null);
+      }
     }
   }
 
-  renderer.domElement.addEventListener("pointerdown", handleInteraction);
+  renderer.domElement.addEventListener("pointerdown", (e) => handleInteraction(e, true));
+  renderer.domElement.addEventListener("pointermove", (e) => handleInteraction(e, false));
 
   /* ---------- ANIMATION LOOP ---------- */
   function animate() {
     requestAnimationFrame(animate);
-    if (engineModel && !isUserInteracting) {
+    if (engineModel && !isUserInteracting && isAutoRotating) {
       let targetSpeed = isRevving ? 0.08 : (activeTarget === "None" ? 0.001 : 0.005);
       currentSpinSpeed += (targetSpeed - currentSpinSpeed) * 0.05;
       engineModel.rotation.y += currentSpinSpeed;
+    }
+    if (engineModel) {
+      engineModel.traverse(child => {
+        if (child.isMesh && child.userData.targetPos) {
+          child.position.lerp(child.userData.targetPos, 0.1);
+        }
+      });
     }
     controls.update();
     renderer.render(scene, camera);
@@ -260,7 +323,7 @@ export function initViewer() {
         if (engineModel && activeTarget !== "None") {
           engineModel.traverse(child => {
             if (child.isMesh) {
-              const data = getPartDataByMeshName(child.name);
+              const data = getPartDataByMeshName(child);
               if (data && data.name === activeTarget) highlightMesh(child);
             }
           });

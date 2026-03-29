@@ -1,23 +1,52 @@
 import { initViewer } from "./viewer.js";
+import { EngineAudio } from "./audio.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  // 1. Initialize 3D Viewer
+  initViewer();
 
-  const viewer = document.getElementById("viewer");
+  // 2. Initialize Audio System (V8 specific for now)
+  const startBtn = document.getElementById("start-btn");
+  const revBtn = document.getElementById("rev-btn");
 
-  /* ---------- LOAD 3D VIEWER ONLY IF PRESENT ---------- */
-  if (viewer) {
-    initViewer();
+  if (startBtn && revBtn) {
+    const audio = new EngineAudio('v8');
+    let isStarted = false;
+
+    startBtn.addEventListener("click", () => {
+      if (!isStarted) {
+        audio.start();
+        startBtn.innerHTML = "<span class='rev-icon'>⏹</span> SHUT DOWN";
+        startBtn.style.border = "2px solid var(--red)";
+        startBtn.style.color = "var(--red)";
+        revBtn.disabled = false;
+        isStarted = true;
+      } else {
+        audio.stop();
+        startBtn.innerHTML = "<span class='rev-icon'>⚡</span> START ENGINE";
+        startBtn.style.border = "2px solid var(--blue)";
+        startBtn.style.color = "var(--blue)";
+        revBtn.disabled = true;
+        isStarted = false;
+      }
+    });
+
+    revBtn.addEventListener("click", () => {
+      audio.rev();
+      const viewer = document.querySelector(".canvas-container");
+      if (viewer) {
+        viewer.classList.add("revving-glow");
+        setTimeout(() => viewer.classList.remove("revving-glow"), 1200);
+      }
+    });
   }
 
-  /* ---------- OPEN VIEWER (used by engines.html buttons) ---------- */
-  window.openEngine = function(name) {
-    if (name === "V8 Engine") {
-      window.location.href = "v8.html";
-    } else if (name === "Inline 4 Engine" || name === "Inline 4") {
-      window.location.href = "inline4.html";
-    } else if (name === "Inline 6 Engine" || name === "Inline 6") {
-      window.location.href = "inline6.html";
-    }
-  };
-
+  // 3. Engine Navigation Logic
+  const engines = document.querySelectorAll(".dash-engine-portal");
+  engines.forEach(eng => {
+    eng.addEventListener("click", () => {
+      const type = eng.getAttribute("data-engine");
+      if (type) window.location.href = `${type}.html`;
+    });
+  });
 });

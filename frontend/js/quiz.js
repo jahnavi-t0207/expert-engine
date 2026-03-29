@@ -1,111 +1,124 @@
-let quizData = {};
+document.addEventListener("DOMContentLoaded", () => {
+  let quizData = null;
+  let currentLevel = null;
+  let currentQuestions = [];
+  let currentIndex = 0;
+  let score = 0;
 
-async function fetchQuizData() {
+  const diffSelector = document.querySelector(".difficulty-selector");
+  const quizActive = document.querySelector(".quiz-active");
+  const resultScreen = document.querySelector(".result-screen");
+  const questionCard = document.getElementById("question-card");
+  const progressBar = document.querySelector(".progress-fill");
+  const progressText = document.querySelector(".quiz-active .page-tag span");
+
+  /* ---------- FETCH QUIZ DATA ---------- */
+  async function loadQuizData() {
     try {
-        const response = await fetch('http://localhost:3000/api/quizzes');
-        quizData = await response.json();
+      const response = await fetch("backend/data/quizzes.json");
+      quizData = await response.json();
     } catch (err) {
-        console.error("Failed to fetch quizzes:", err);
+      console.error("Failed to load quiz data:", err);
+      // Fallback if fetch fails
+      quizData = {
+        easy: [{ q: "What component moves inside the cylinder?", o: ["Piston", "Crankshaft"], a: 0 }]
+      };
     }
-}
+  }
+  loadQuizData();
 
-let currentDiff = null;
-let currentQuestionIndex = 0;
-let score = 0;
-let activeQuestions = [];
-
-document.addEventListener("DOMContentLoaded", async () => {
-  await fetchQuizData();
-  const diffCards = document.querySelectorAll(".diff-card");
-  diffCards.forEach(card => {
+  /* ---------- START QUIZ ---------- */
+  document.querySelectorAll(".diff-card").forEach(card => {
     card.addEventListener("click", () => {
-      startQuiz(card.dataset.level);
+      currentLevel = card.dataset.level;
+      currentQuestions = quizData[currentLevel];
+      currentIndex = 0;
+      score = 0;
+      
+      diffSelector.style.display = "none";
+      quizActive.style.display = "block";
+      showQuestion();
     });
   });
-});
 
-function startQuiz(level) {
-  currentDiff = level;
-  activeQuestions = quizData[level];
-  currentQuestionIndex = 0;
-  score = 0;
+  function showQuestion() {
+    if (currentIndex >= currentQuestions.length) {
+      showResults();
+      return;
+    }
 
-  document.querySelector(".difficulty-selector").style.display = "none";
-  document.querySelector(".quiz-active").style.display = "block";
+    const q = currentQuestions[currentIndex];
+    
+    // Update Progress
+    const progress = ((currentIndex + 1) / currentQuestions.length) * 100;
+    progressBar.style.width = `${progress}%`;
+    progressText.textContent = `QUESTION ${currentIndex + 1}/${currentQuestions.length}`;
 
-  showQuestion();
-}
+    // Render Question
+    questionCard.innerHTML = `
+      <h2 class="q-text">${q.q}</h2>
+      <div class="options-grid">
+        ${q.o.map((opt, i) => `
+          <div class="option" data-idx="${i}">
+            <span class="opt-letter">${String.fromCharCode(65 + i)}</span>
+            ${opt}
+          </div>
+        `).join("")}
+      </div>
+    `;
 
-function showQuestion() {
-  const q = activeQuestions[currentQuestionIndex];
-  
-  // Update Progress
-  const pct = ((currentQuestionIndex + 1) / activeQuestions.length) * 100;
-  document.querySelector(".progress-fill").style.width = pct + "%";
-  document.querySelector(".page-tag span").innerText = `QUESTION ${currentQuestionIndex + 1}/${activeQuestions.length}`;
+    // Add Click Listeners
+    questionCard.querySelectorAll(".option").forEach(opt => {
+      opt.addEventListener("click", () => handleAnswer(opt));
+    });
 
-  // Populate Question Content
-  const container = document.querySelector(".question-card");
-  container.innerHTML = `
-    <div class="q-text">${q.q}</div>
-    <div class="options-grid">
-      ${q.o.map((opt, i) => `<div class="option" data-idx="${i}">${opt}</div>`).join('')}
-    </div>
-  `;
-
-  // Attach Listeners
-  const options = container.querySelectorAll(".option");
-  options.forEach(opt => {
-    opt.addEventListener("click", () => handleAnswer(parseInt(opt.dataset.idx), opt));
-  });
-}
-
-function handleAnswer(idx, element) {
-  const q = activeQuestions[currentQuestionIndex];
-  const options = document.querySelectorAll(".option");
-
-  // Disable further clicks
-  options.forEach(o => o.style.pointerEvents = "none");
-
-  if (idx === q.a) {
-    element.classList.add("correct");
-    score++;
-  } else {
-    element.classList.add("wrong");
-    options[q.a].classList.add("correct");
+    // Animation
+    questionCard.style.animation = "none";
+    questionCard.offsetHeight; /* trigger reflow */
+    questionCard.style.animation = "slideUp 0.5s ease forwards";
   }
 
-  // Next Question Delay
-  setTimeout(() => {
-    currentQuestionIndex++;
-    if (currentQuestionIndex < activeQuestions.length) {
-      showQuestion();
+  function handleAnswer(selectedOpt) {
+    const correctIdx = currentQuestions[currentIndex].a;
+    const selectedIdx = parseInt(selectedOpt.dataset.idx);
+    
+    // Disable all options
+    questionCard.querySelectorAll(".option").forEach(opt => {
+      opt.style.pointerEvents = "none";
+      const idx = parseInt(opt.dataset.idx);
+      if (idx === correctIdx) opt.classList.add("correct");
+    });
+
+    if (selectedIdx === correctIdx) {
+      score++;
     } else {
-      showResult();
+      selectedOpt.classList.add("wrong");
     }
-  }, 1200);
-}
 
-function showResult() {
-  document.querySelector(".quiz-active").style.display = "none";
-  const resultScreen = document.querySelector(".result-screen");
-  resultScreen.style.display = "block";
+    currentIndex++;
+    setTimeout(showQuestion, 1500);
+  }
 
-  const total = activeQuestions.length;
-  const pct = (score / total) * 100;
-  
-  let grade = "C";
-  if (pct === 100) grade = "S";
-  else if (pct >= 80) grade = "A";
-  else if (pct >= 60) grade = "B";
+  function showResults() {
+    quizActive.style.display = "none";
+    resultScreen.style.display = "block";
+    
+    const percentage = (score / currentQuestions.length) * 100;
+    let grade = "C";
+    let message = "Keep studying the schematics.";
 
-  document.querySelector(".grade-badge").innerText = grade;
-  document.querySelector(".grade-badge").className = `grade-badge ${grade}`;
-  document.querySelector(".result-screen h1").innerText = `SCORE: ${score}/${total}`;
-  document.querySelector(".result-screen p").innerText = `Success accuracy: ${pct}% - Current Tier: ${grade}`;
-}
+    if (percentage === 100) { grade = "S"; message = "Perfect completion. Master Engineer status achieved."; }
+    else if (percentage >= 80) { grade = "A"; message = "Excellent performance. High technical accuracy."; }
+    else if (percentage >= 60) { grade = "B"; message = "Solid knowledge base. Room for optimization."; }
 
-function restartQuiz() {
-  document.querySelector(".result-screen").style.display = "none";
-  document.querySelector(".difficulty-selector").style.display = "grid";
-}
+    resultScreen.querySelector(".grade-badge").textContent = grade;
+    resultScreen.querySelector(".grade-badge").className = `grade-badge ${grade}`;
+    resultScreen.querySelector("h1").textContent = `SCORE: ${score}/${currentQuestions.length}`;
+    resultScreen.querySelector("p").textContent = message;
+  }
+
+  window.restartQuiz = () => {
+    resultScreen.style.display = "none";
+    diffSelector.style.display = "grid";
+  };
+});
