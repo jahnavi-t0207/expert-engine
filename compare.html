@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revora - Compare</title>
+  <link rel="icon" href="assets/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo-area">
+      <a href="index.html">
+        <img src="assets/logo.png" alt="Revora Logo" class="logo-img">
+      </a>
+      <div class="logo-sub">Hackathon Build v4.0</div>
+    </div>
+    <a class="nav" href="index.html">🏠 Home</a>
+    <a class="nav" href="engines.html">🔧 Engines</a>
+    <a class="nav" href="parts.html">⚙️ Parts</a>
+    <a class="nav active" href="compare.html">⚖️ Compare</a>
+    <a class="nav" href="about.html">ℹ️ About</a>
+  </div>
+  
+  <div class="main">
+    <div class="page-header">
+      <div class="page-tag">TOOLS</div>
+      <h1 class="title">Compare Engines</h1>
+      <p>Select an engine on the left and right to pit them head-to-head across 7 critical metrics.</p>
+    </div>
+
+    <!-- SELECTION AREA -->
+    <div class="compare-layout">
+      <!-- SIDE A -->
+      <div class="compare-side" id="side-A">
+        <h2 class="side-title">Engine A</h2>
+        <div class="select-grid">
+          <div class="select-card" data-engine="v8" data-side="A">
+            <span class="icon">🏎️</span>
+            <h3>V8 Engine</h3>
+          </div>
+          <div class="select-card" data-engine="v6" data-side="A">
+            <span class="icon">🚙</span>
+            <h3>V6 Engine</h3>
+          </div>
+          <div class="select-card" data-engine="i4" data-side="A">
+            <span class="icon">🚗</span>
+            <h3>Inline 4</h3>
+          </div>
+          <div class="select-card" data-engine="i6" data-side="A">
+            <span class="icon">🚀</span>
+            <h3>Inline 6</h3>
+          </div>
+          <div class="select-card" data-engine="boxer" data-side="A">
+            <span class="icon">🥊</span>
+            <h3>Boxer</h3>
+          </div>
+          <div class="select-card" data-engine="rotary" data-side="A">
+            <span class="icon">🌀</span>
+            <h3>Rotary</h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- VS DIVIDER -->
+      <div class="vs-divider">
+        <div class="vs-circle">VS</div>
+      </div>
+
+      <!-- SIDE B -->
+      <div class="compare-side" id="side-B">
+        <h2 class="side-title">Engine B</h2>
+        <div class="select-grid">
+          <div class="select-card" data-engine="v8" data-side="B">
+            <span class="icon">🏎️</span>
+            <h3>V8 Engine</h3>
+          </div>
+          <div class="select-card" data-engine="v6" data-side="B">
+            <span class="icon">🚙</span>
+            <h3>V6 Engine</h3>
+          </div>
+          <div class="select-card" data-engine="i4" data-side="B">
+            <span class="icon">🚗</span>
+            <h3>Inline 4</h3>
+          </div>
+          <div class="select-card" data-engine="i6" data-side="B">
+            <span class="icon">🚀</span>
+            <h3>Inline 6</h3>
+          </div>
+          <div class="select-card" data-engine="boxer" data-side="B">
+            <span class="icon">🥊</span>
+            <h3>Boxer</h3>
+          </div>
+          <div class="select-card" data-engine="rotary" data-side="B">
+            <span class="icon">🌀</span>
+            <h3>Rotary</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS AREA -->
+    <div id="comparison-results" class="results-container" style="display: none;">
+      <!-- JavaScript will inject the table and winner here -->
+    </div>
+
+  </div>
+
+  <script type="module" src="js/compare.js"></script>
+</body>
+</html>
