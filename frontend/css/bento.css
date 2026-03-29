@@ -87,6 +87,32 @@
   box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 0 20px rgba(56, 189, 248, 0.1);
 }
 
+/* Differentiated hover glow per card (matching icon color) */
+/* Large card — Engines (purple) */
+.bento-large:hover {
+  border-color: rgba(168, 85, 247, 0.5) !important;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 0 30px rgba(168, 85, 247, 0.1) !important;
+}
+
+/* Dashboard card (blue) */
+a.bento-card:nth-of-type(2):hover {
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 0 20px rgba(59, 130, 246, 0.1);
+}
+
+/* Parts card (white/silver) */
+a.bento-card:nth-of-type(3):hover {
+  border-color: rgba(248, 250, 252, 0.25);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 0 20px rgba(248, 250, 252, 0.05);
+}
+
+/* Compare card (pink/accent) */
+a.bento-card:nth-of-type(4):hover {
+  border-color: rgba(244, 114, 182, 0.5);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 0 20px rgba(244, 114, 182, 0.1);
+}
+
+
 /* The massive feature card spans standard grids */
 .bento-large {
   grid-column: span 3;

@@ -1,0 +1,48 @@
+{
+  "boot": [
+    {
+      "lines": [
+        "> BOOT SEQUENCE INITIATED...",
+        "> CONNECTING TO REVORA MAINFRAME...",
+        "> STATUS: 200 OK.",
+        "> SYNCING 3D MESH DATA [||||||||||] 100%",
+        "> AUTHENTICATING TEAM CODE JAMMERS...",
+        "> ACCESS GRANTED.",
+        "> WAITING FOR USER INPUT"
+      ]
+    },
+    {
+      "lines": [
+        "> ENGINE DATABASE QUERY: SELECT * FROM engines;",
+        "> V8 ENGINE ......... DISPLACEMENT: 6.5L  |  HP: 700",
+        "> INLINE 6 .......... DISPLACEMENT: 3.8L  |  HP: 500",
+        "> INLINE 4 .......... DISPLACEMENT: 2.5L  |  HP: 250",
+        "> ROTARY ............ DISPLACEMENT: 1.3L  |  HP: 300",
+        "> 4 RECORDS RETURNED ✓",
+        "> DATABASE CONNECTION CLOSED."
+      ]
+    },
+    {
+      "lines": [
+        "> REVORA v4.0 // HACKATHON BUILD",
+        "> TECH STACK: NODE.JS + EXPRESS + SOCKET.IO",
+        "> THREE.JS RENDERER: WebGL2 ACTIVE",
+        "> INTERSECTION OBSERVER: LOADED",
+        "> MODELS IN MEMORY: V8 [56MB] I4 [15MB] I6 [6MB]",
+        "> PERFORMANCE SCORE: 94.2% OPTIMAL",
+        "> SYSTEM FULLY OPERATIONAL ✓"
+      ]
+    },
+    {
+      "lines": [
+        "> FUN FACT: A V8 fires 4 times per crankshaft revolution",
+        "> FUN FACT: The Inline 6 requires NO balance shafts",
+        "> FUN FACT: Rotary engines have ~3 moving parts",
+        "> FUN FACT: The 2JZ-GTE makes 320HP stock, 1000+ tuned",
+        "> FUN FACT: BMW's S54 I6 revs to 8,000 RPM naturally",
+        "> KNOWLEDGE BASE UPDATED.",
+        "> STANDBY..."
+      ]
+    }
+  ]
+}

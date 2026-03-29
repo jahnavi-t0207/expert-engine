@@ -1,0 +1,205 @@
+/* ENGINE ASSISTANT CSS — "REV" UPGRADE */
+
+.assistant-container {
+  max-width: 900px;
+  margin: 0 auto;
+  height: calc(100vh - 120px);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Chat Header */
+.chat-header {
+  padding: 30px 0;
+  border-bottom: 1px solid var(--glass-border);
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.chat-header::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--blue), transparent);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+}
+
+.chat-header h1 {
+  font-size: 32px;
+  letter-spacing: -1px;
+  background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.chat-header .page-tag {
+  color: var(--blue);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+/* Message Area */
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-track { background: transparent; }
+.chat-messages::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.2); border-radius: 10px; }
+
+.message {
+  max-width: 75%;
+  padding: 18px 24px;
+  border-radius: 20px;
+  line-height: 1.7;
+  font-size: 15px;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.bot-msg {
+  align-self: flex-start;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid var(--glass-border);
+  color: #e2e8f0;
+  border-bottom-left-radius: 4px;
+  backdrop-filter: blur(12px);
+}
+
+/* REVVING THE BOT MESSAGE (GLOW) */
+.bot-msg:hover {
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 8px 30px rgba(56, 189, 248, 0.1);
+}
+
+.user-msg {
+  align-self: flex-end;
+  background: linear-gradient(135deg, var(--blue) 0%, #0ea5e9 100%);
+  color: #000;
+  font-weight: 600;
+  border-bottom-right-radius: 4px;
+  box-shadow: 0 10px 20px rgba(56, 189, 248, 0.2);
+}
+
+/* BOT NAME BADGE */
+.bot-msg::before {
+  content: "REV v4.1";
+  position: absolute;
+  top: -22px;
+  left: 4px;
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--blue);
+  letter-spacing: 1px;
+  opacity: 0.7;
+}
+
+/* Suggestions Area */
+.suggestions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 20px 0;
+  border-top: 1px solid var(--glass-border);
+}
+
+.suggest-tag {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+  color: #94a3b8;
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.suggest-tag:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: var(--blue);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(56, 189, 248, 0.2);
+}
+
+/* Input Wrapper */
+.chat-input-wrapper {
+  display: flex;
+  gap: 15px;
+  padding: 25px 0 35px;
+}
+
+.chat-input {
+  flex: 1;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 18px 25px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s;
+  backdrop-filter: blur(10px);
+}
+
+.chat-input:focus {
+  border-color: var(--blue);
+  background: rgba(15, 23, 42, 0.9);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.1);
+}
+
+.send-btn {
+  background: var(--blue);
+  color: #000;
+  width: 60px;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  font-size: 22px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.send-btn:hover {
+  transform: scale(1.08) rotate(5deg);
+  box-shadow: 0 0 30px rgba(56, 189, 248, 0.4);
+}
+
+/* Performance Chips */
+.link-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+  padding: 8px 14px;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid var(--blue);
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--blue);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.link-chip:hover {
+  background: var(--blue);
+  color: #000;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+}

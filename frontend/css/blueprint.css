@@ -1,4 +1,4 @@
-/* BLUEPRINT & NEON HACKATHON STYLES */
+/* CARBON REDLINE BLUEPRINT STYLES */
 body.blueprint-body {
   background-color: #020617; /* Deep almost-black dark blue */
   background-image: 
@@ -24,7 +24,7 @@ body.blueprint-body {
   color: #fff;
   text-transform: uppercase;
   letter-spacing: 8px;
-  text-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+  text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
   margin-top: 10px;
 }
 
@@ -42,9 +42,9 @@ body.blueprint-body {
   background-color: transparent;
   width: 100%;
   height: 280px;
-  perspective: 1500px; /* 3D effect depth */
+  perspective: 1500px;
   cursor: pointer;
-  display: block; /* Default block */
+  display: block;
   animation: fadeIn 0.5s ease-in;
 }
 
@@ -76,7 +76,7 @@ body.blueprint-body {
   height: 100%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  border: 1px solid rgba(56, 189, 248, 0.3);
+  border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
 /* FRONT: Neon Glowing Frame */
@@ -87,7 +87,6 @@ body.blueprint-body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* Cool sci-fi clipped corners */
   clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
 }
 
@@ -96,23 +95,23 @@ body.blueprint-body {
   content: '';
   position: absolute;
   top: 10px; left: 10px; right: 10px; bottom: 10px;
-  border: 1px dashed rgba(56, 189, 248, 0.15);
+  border: 1px dashed rgba(239, 68, 68, 0.1);
   clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
 }
 
 .front-icon {
   font-size: 60px;
   margin-bottom: 25px;
-  filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.6));
+  filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.5));
 }
 
 .front-title {
   font-size: 22px;
   font-weight: 700;
-  color: #38bdf8;
+  color: #ef4444; /* Racing Red */
   letter-spacing: 3px;
   text-transform: uppercase;
-  text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
 }
 
 .front-sys {
@@ -135,16 +134,15 @@ body.blueprint-body {
   box-shadow: 0 0 40px rgba(56, 189, 248, 0.15);
   display: flex;
   flex-direction: column;
-  /* Reverse angle clip for the back */
   clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
 }
 
 .back-title {
   font-size: 18px;
   font-weight: 700;
-  color: #38bdf8;
+  color: #ef4444;
   margin-bottom: 15px;
-  border-bottom: 1px solid rgba(56, 189, 248, 0.3);
+  border-bottom: 1px solid rgba(239, 68, 68, 0.2);
   padding-bottom: 10px;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -158,11 +156,11 @@ body.blueprint-body {
 }
 
 .back-desc b {
-  color: #cbd5e1;
+  color: #eff6ff;
 }
 
 .back-footer {
-  font-family: 'Courier New', Courier, monospace; /* Coding / Data vibe */
+  font-family: 'Courier New', Courier, monospace;
   font-size: 11px;
   color: #fbbf24;
   margin-top: 20px;
@@ -192,13 +190,13 @@ body.blueprint-body {
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: inset 0 0 10px rgba(56, 189, 248, 0.1);
+  box-shadow: inset 0 0 10px rgba(239, 68, 68, 0.1);
   clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
 }
 
 .stark-btn:hover {
-  background: rgba(56, 189, 248, 0.1);
-  box-shadow: 0 0 25px rgba(56, 189, 248, 0.4), inset 0 0 20px rgba(56, 189, 248, 0.3);
-  text-shadow: 0 0 8px #38bdf8;
+  background: rgba(239, 68, 68, 0.1);
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.4), inset 0 0 20px rgba(239, 68, 68, 0.3);
+  text-shadow: 0 0 8px #ef4444;
   transform: scale(1.05);
 }
