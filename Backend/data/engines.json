@@ -1,69 +1,74 @@
-[
-  {
-    "id": 1,
+{
+  "v8": {
     "name": "V8 Engine",
-    "cylinders": 8,
-    "power": "High",
-    "efficiency": "Medium",
-    "advantages": [
-      "High power output",
-      "Smooth performance",
-      "Great for performance vehicles"
-    ],
-    "disadvantages": [
-      "High fuel consumption",
-      "Heavy",
-      "More complex design"
-    ],
-    "parts": [
-      "Pistons",
-      "Crankshaft",
-      "Camshaft",
-      "Spark Plugs",
-      "Valves"
-    ]
+    "hp": 700,
+    "disp": 6.5,
+    "efficient": 4,
+    "smooth": 8,
+    "torque": 9,
+    "lightness": 3,
+    "cost": 1200000,
+    "pros": ["High power output", "Smooth performance", "Great for performance"],
+    "cons": ["High fuel consumption", "Heavier design", "More complex"]
   },
-  {
-    "id": 2,
-    "name": "Inline 4 Engine",
-    "cylinders": 4,
-    "power": "Medium",
-    "efficiency": "High",
-    "advantages": [
-      "Fuel efficient",
-      "Lightweight",
-      "Simple design"
-    ],
-    "disadvantages": [
-      "Lower power",
-      "More vibration"
-    ],
-    "parts": [
-      "Pistons",
-      "Crankshaft",
-      "Timing belt",
-      "Spark Plugs"
-    ]
-  },
-  {
-    "id": 3,
+  "v6": {
     "name": "V6 Engine",
-    "cylinders": 6,
-    "power": "Balanced",
-    "efficiency": "Balanced",
-    "advantages": [
-      "Good power",
-      "Compact compared to V8"
-    ],
-    "disadvantages": [
-      "More expensive",
-      "More complex than inline engines"
-    ],
-    "parts": [
-      "Pistons",
-      "Crankshaft",
-      "Camshaft",
-      "Valves"
-    ]
+    "hp": 400,
+    "disp": 4.0,
+    "efficient": 6,
+    "smooth": 7,
+    "torque": 7,
+    "lightness": 5,
+    "cost": 800000,
+    "pros": ["Good power balance", "Compact vs V8", "Widely available"],
+    "cons": ["More expensive than I4", "More complex"]
+  },
+  "i4": {
+    "name": "Inline 4",
+    "hp": 250,
+    "disp": 2.5,
+    "efficient": 9,
+    "smooth": 5,
+    "torque": 5,
+    "lightness": 8,
+    "cost": 350000,
+    "pros": ["Fuel efficient", "Lightweight", "Simple design"],
+    "cons": ["Lower power", "More vibration"]
+  },
+  "i6": {
+    "name": "Inline 6",
+    "hp": 500,
+    "disp": 3.8,
+    "efficient": 6,
+    "smooth": 10,
+    "torque": 8,
+    "lightness": 4,
+    "cost": 1500000,
+    "pros": ["Naturally balanced", "Very smooth", "High torque"],
+    "cons": ["Long engine bay needed", "Higher cost"]
+  },
+  "boxer": {
+    "name": "Boxer",
+    "hp": 400,
+    "disp": 3.6,
+    "efficient": 6,
+    "smooth": 8,
+    "torque": 6,
+    "lightness": 6,
+    "cost": 1000000,
+    "pros": ["Low center of gravity", "Balanced vibration", "Good handling"],
+    "cons": ["Wide layout", "Hard to service"]
+  },
+  "rotary": {
+    "name": "Rotary",
+    "hp": 300,
+    "disp": 1.3,
+    "efficient": 2,
+    "smooth": 9,
+    "torque": 4,
+    "lightness": 9,
+    "cost": 900000,
+    "pros": ["High rev ceiling", "Compact & light", "Very smooth"],
+    "cons": ["Poor fuel economy", "High oil consumption"]
   }
-]
+}

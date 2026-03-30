@@ -3,56 +3,79 @@ document.addEventListener("DOMContentLoaded", () => {
     const cursor = document.getElementById("terminal-cursor");
     if (!termText) return;
 
-    const lines = [
-        "> BOOT SEQUENCE INITIATED...",
-        "> CONNECTING TO REVORA MAINFRAME...",
-        "> STATUS: 200 OK.",
-        "> SYNCING 3D MESH DATA [||||||||||] 100%",
-        "> AUTHENTICATING TEAM CODE JAMMERS...",
-        "> ACCESS GRANTED.",
-        "> WAITING FOR USER INPUT"
-    ];
+    let sequences = [];
 
-    let currentLine = 0;
-    let currentChar = 0;
-    let charSpeed = 25; // ms per keystroke
-    let lineDelay = 600; // ms per line break
-
-    function typeLine() {
-        if (currentLine < lines.length) {
-            let row = lines[currentLine];
-            
-            // Add a break for new lines
-            if (currentChar === 0 && currentLine > 0) {
-               termText.innerHTML += "<br>";
-            }
-
-            if (currentChar < row.length) {
-                // Simulate fast typing
-                termText.innerHTML += row.charAt(currentChar);
-                currentChar++;
-                
-                // Add a random tiny glitch delay to feel like a real terminal
-                let flutter = Math.random() > 0.9 ? 150 : charSpeed;
-                setTimeout(typeLine, flutter);
-            } else {
-                // Line finished
-                currentChar = 0;
-                currentLine++;
-                
-                // If the line says 'ACCESS GRANTED', make it flash
-                if (row.includes("ACCESS GRANTED")) {
-                    termText.innerHTML = termText.innerHTML.replace("ACCESS GRANTED.", "<span style='color: #10b981; font-weight: bold;'>ACCESS GRANTED.</span>");
-                }
-                
-                setTimeout(typeLine, lineDelay);
-            }
-        } else {
-            // Blink cursor forever at the end
-            cursor.classList.add("infinite-blink");
+    async function fetchTerminalSequences() {
+        try {
+            const response = await fetch('http://localhost:3000/api/terminal');
+            const data = await response.json();
+            sequences = data.boot.map(s => s.lines);
+            typeLine(); // Start typing after data is loaded
+        } catch (err) {
+            console.error("Failed to fetch terminal sequences:", err);
+            termText.innerHTML = "> CONNECTION ERROR: REVORA OFFLINE.";
         }
     }
 
-    // Start the boot sequence
-    setTimeout(typeLine, 800);
+    let charSpeed = 22;
+    let lineDelay = 500;
+    let seqIndex = 0;
+    let currentLine = 0;
+    let currentChar = 0;
+
+    function clearTerminal() {
+        termText.innerHTML = "";
+    }
+
+    function typeLine() {
+        const lines = sequences[seqIndex];
+
+        if (currentLine < lines.length) {
+            let row = lines[currentLine];
+
+            if (currentChar === 0 && currentLine > 0) {
+                termText.innerHTML += "<br>";
+            }
+
+            if (currentChar < row.length) {
+                let ch = row.charAt(currentChar);
+                // Green highlight for special phrases
+                termText.innerHTML += ch;
+                currentChar++;
+                let flutter = Math.random() > 0.92 ? 120 : charSpeed;
+                setTimeout(typeLine, flutter);
+            } else {
+                currentChar = 0;
+                currentLine++;
+
+                // Color certain lines differently
+                if (row.includes("ACCESS GRANTED") || row.includes("✓") || row.includes("OPERATIONAL")) {
+                    const last = termText.innerHTML.lastIndexOf(row.replace(/</g, "&lt;"));
+                    termText.innerHTML = termText.innerHTML.replace(
+                        row, `<span style='color:#10b981;font-weight:bold;'>${row}</span>`
+                    );
+                }
+                if (row.includes("FUN FACT")) {
+                    termText.innerHTML = termText.innerHTML.replace(
+                        row, `<span style='color:#fcd34d;'>${row}</span>`
+                    );
+                }
+
+                setTimeout(typeLine, lineDelay);
+            }
+        } else {
+            // Sequence done — wait 3s, then cycle to next
+            cursor.classList.add("infinite-blink");
+            setTimeout(() => {
+                cursor.classList.remove("infinite-blink");
+                seqIndex = (seqIndex + 1) % sequences.length;
+                currentLine = 0;
+                currentChar = 0;
+                clearTerminal();
+                setTimeout(typeLine, 400);
+            }, 3000);
+        }
+    }
+
+    fetchTerminalSequences();
 });

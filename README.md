@@ -100,6 +100,7 @@ Revora follows a **Premium Industrial** aesthetic:
 
 ## 👥 Meet the Team
 **Team Code Jammers**
+*   **Members**:Vivek Babu Naidu, M Pavan Kumar, T Jahnavi, S Vasavi Sruthi
 *   **Hackathon Build**: v4.0 (Finalized Branding)
 *   **Mission**: Making mechanical engineering accessible through visual excellence.
 

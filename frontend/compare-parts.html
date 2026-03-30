@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Revora Part Comparator — Analyze engine components side-by-side. Compare Piston, Crankshaft, Camshaft and more with technical data tables and 3D visualization charts.">
+  <title>Revora - Compare Parts</title>
+  <link rel="icon" href="assets/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/compare-parts.css">
+  <style>
+    .badge-low { background: rgba(74, 222, 128, 0.1); color: var(--green); padding: 4px 8px; border-radius: 6px; font-size: 10px; font-weight: 800; border: 1px solid rgba(74, 222, 128, 0.2); }
+    .badge-medium { background: rgba(251, 191, 36, 0.1); color: var(--yellow); padding: 4px 8px; border-radius: 6px; font-size: 10px; font-weight: 800; border: 1px solid rgba(251, 191, 36, 0.2); }
+    .badge-high { background: rgba(248, 113, 113, 0.1); color: var(--red); padding: 4px 8px; border-radius: 6px; font-size: 10px; font-weight: 800; border: 1px solid rgba(248, 113, 113, 0.2); }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body style="background-color: #0A0E17; min-height: 100vh;">
+
+  <!-- SIDEBAR NAVIGATION -->
+  <div class="sidebar">
+    <div class="logo-area">
+      <a href="index.html">
+        <img src="assets/logo.png" alt="Revora Logo" class="logo-img">
+      </a>
+      <div class="logo-sub" style="color:var(--blue); text-shadow: 0 0 10px rgba(56, 189, 248, 0.3);">Cyber-Engine v4.4 (LTS)</div>
+    </div>
+    
+    <div class="nav-links">
+      <a class="nav" href="index.html"><span>🏠</span> Home</a>
+      <a class="nav" href="engines.html"><span>🏎️</span> Engines</a>
+      <a class="nav" href="parts.html"><span>🔩</span> Parts</a>
+      <a class="nav" href="compare.html"><span>⚖️</span> Compare Engines</a>
+      <a class="nav active" href="compare-parts.html"><span>🛠️</span> Compare Parts</a>
+      <a class="nav" href="quiz.html"><span>🧠</span> Quiz</a>
+      <a class="nav" href="assistant.html"><span>🤖</span> Assistant</a>
+      <a class="nav" href="about.html"><span>ℹ</span> About</a>
+    </div>
+
+    <div class="user-profile">
+      <div class="avatar">👨‍💻</div>
+      <div class="user-info">
+        <div class="name">Code Jammers</div>
+        <div class="role">Admin Mode</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main">
+    <div class="page-header">
+      <div class="page-tag">DIAGNOSTICS // MODULE-C</div>
+      <h1 class="title">Part Comparator</h1>
+      <p>Analyze mechanical components side-by-side to understand system hierarchy and complexity.</p>
+    </div>
+
+    <!-- SELECTION SECTION -->
+    <div class="selection-panel">
+      <div class="selection-grid">
+        <div class="select-box">
+          <label>Module A</label>
+          <select id="part-select-1" class="part-dropdown">
+            <option value="">Select Part...</option>
+          </select>
+        </div>
+        <div class="select-box">
+          <label>Module B</label>
+          <select id="part-select-2" class="part-dropdown">
+            <option value="">Select Part...</option>
+          </select>
+        </div>
+        <div class="select-box">
+          <label>Module C (Optional)</label>
+          <select id="part-select-3" class="part-dropdown">
+            <option value="">Select Part...</option>
+          </select>
+        </div>
+        <div class="select-box">
+          <label>Module D (Optional)</label>
+          <select id="part-select-4" class="part-dropdown">
+            <option value="">Select Part...</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="action-row">
+        <button id="compare-btn" class="action-btn primary">RUN ANALYSIS</button>
+        <button id="clear-btn" class="action-btn secondary">RESET SENSORS</button>
+      </div>
+    </div>
+
+    <!-- COMPARISON TABLE SECTION -->
+    <div id="table-container" class="results-wrapper is-hidden">
+      <div class="results-header">
+        <h2 id="comparison-title">Component Analysis</h2>
+      </div>
+      <div class="table-scroll">
+        <table id="compare-table" class="data-table">
+          <!-- JS will inject content here -->
+        </table>
+      </div>
+    </div>
+
+    <!-- VISUALIZATION SECTION -->
+    <div id="chart-container" class="results-wrapper is-hidden" style="margin-top: 40px;">
+      <div class="results-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <h2>Data Visualization</h2>
+        <div class="chart-toggles">
+          <button class="chart-toggle active" data-type="bar">BAR</button>
+          <button class="chart-toggle" data-type="radar">RADAR</button>
+        </div>
+      </div>
+      <div class="chart-box">
+        <canvas id="partChart"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="js/compare-parts.js"></script>
+</body>
+</html>

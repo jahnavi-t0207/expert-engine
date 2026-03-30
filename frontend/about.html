@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="About Revora — The story behind Team Code Jammers' hackathon project. Built with Three.js, HTML5, Vanilla JS, and the Intersection Observer API for premium 3D engine education.">
   <title>Revora - About the Tech</title>
   <link rel="icon" href="assets/logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/bento.css">
 </head>
-<body style="background-color: #020617; min-height: 100vh;">
+<body style="background-color: #0A0E17; min-height: 100vh;">
 
   <!-- SIDEBAR NAVIGATION -->
   <div class="sidebar">
@@ -17,14 +18,17 @@
       <a href="index.html">
         <img src="assets/logo.png" alt="Revora Logo" class="logo-img">
       </a>
-      <div class="logo-sub">Hackathon Build v4.0</div>
+      <div class="logo-sub" style="color:var(--blue); text-shadow: 0 0 10px rgba(56, 189, 248, 0.3);">Cyber-Engine v4.4 (LTS)</div>
     </div>
     
     <div class="nav-links">
       <a class="nav" href="index.html"><span>🏠</span> Home</a>
       <a class="nav" href="engines.html"><span>🏎️</span> Engines</a>
       <a class="nav" href="parts.html"><span>🔩</span> Parts</a>
-      <a class="nav" href="compare.html"><span>⚖️</span> Compare</a>
+      <a class="nav" href="compare.html"><span>⚖️</span> Compare Engines</a>
+      <a class="nav" href="compare-parts.html"><span>🛠️</span> Compare Parts</a>
+      <a class="nav" href="quiz.html"><span>🧠</span> Quiz</a>
+      <a class="nav" href="assistant.html"><span>🤖</span> Assistant</a>
       <a class="nav active" href="about.html"><span>ℹ️</span> About</a>
     </div>
 
@@ -88,12 +92,19 @@
         </div>
       </a>
 
-      <!-- FEATURE 4: COMPARE -->
-      <a href="compare.html" class="bento-card">
-        <div class="bento-icon" style="filter: drop-shadow(0 0 10px rgba(248, 113, 113, 0.5));">⚖️</div>
+      <a href="quiz.html" class="bento-card">
+        <div class="bento-icon" style="filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.5));">🧠</div>
         <div class="content">
-          <h2>Data-Driven Duel</h2>
-          <p>Our powerful custom analytical algorithm. Select any two vehicles and instantly generate categorical winners based on raw metrics like HP, Cost, and Efficiency.</p>
+          <h2>Knowledge Training</h2>
+          <p>Test your expertise in our technical center. Adaptive quizzes for all levels from apprentice to lead engineer.</p>
+        </div>
+      </a>
+
+      <a href="assistant.html" class="bento-card">
+        <div class="bento-icon" style="filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5));">🤖</div>
+        <div class="content">
+          <h2>Expert AI Assistant</h2>
+          <p>Clear your doubts instantly with our engineering database. Ask about parts, timing, or technical concepts.</p>
         </div>
       </a>
 
@@ -106,6 +117,38 @@
       <div class="tech-item"><div class="tech-dot" style="background:#f0db4f; box-shadow: 0 0 10px #f0db4f;"></div> Vanilla JavaScript</div>
       <div class="tech-item"><div class="tech-dot" style="background:#ffffff; box-shadow: 0 0 10px #ffffff;"></div> Three.js (ESM)</div>
       <div class="tech-item"><div class="tech-dot" style="background:#0ea5e9; box-shadow: 0 0 10px #0ea5e9;"></div> Intersection Observer API</div>
+    </div>
+
+    <!-- 4-STROKE CYCLE WALKTHROUGH -->
+    <div class="cycle-section">
+      <div class="cycle-header">
+        <div class="page-tag">FUNDAMENTALS // 4-STROKE ENGINE</div>
+        <h2>THE MECHANICAL SYMPHONY</h2>
+        <p>A precision dance of air, fuel, and fire. Scroll to analyze the cycle.</p>
+      </div>
+
+      <div class="cycle-grid">
+        <div class="cycle-card">
+          <div class="cycle-num">01</div>
+          <h3>INTAKE</h3>
+          <p>The piston moves down, creating a vacuum. The intake valve opens, pulling in a crisp air-fuel mixture ready for the punch.</p>
+        </div>
+        <div class="cycle-card">
+          <div class="cycle-num">02</div>
+          <h3>COMPRESSION</h3>
+          <p>Valves close tightly. The piston shoots upward, crushing the mixture into a tiny, high-pressure, highly explosive pocket.</p>
+        </div>
+        <div class="cycle-card">
+          <div class="cycle-num">03</div>
+          <h3>POWER</h3>
+          <p>💥 <strong>BOOM.</strong> The spark plug fires. The resulting explosion drives the piston down with thousands of pounds of force.</p>
+        </div>
+        <div class="cycle-card">
+          <div class="cycle-num">04</div>
+          <h3>EXHAUST</h3>
+          <p>The job is done. The exhaust valve opens, and the piston pushes the spent gases out to make room for the next cycle.</p>
+        </div>
+      </div>
     </div>
 
   </div>

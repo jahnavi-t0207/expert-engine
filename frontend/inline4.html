@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Inline 4 Engine 3D Scrollytelling — Discover how one of the world's most popular engine layouts works. Get expert help from our AI Assistant or test yourself in the quiz.">
   <title>Inline 4 Engine - Scrollytelling</title>
   <link rel="icon" href="assets/logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -10,6 +11,9 @@
   <link rel="stylesheet" href="css/viewer.css">
 </head>
 <body class="scrolly-body">
+
+  <!-- SCROLL PROGRESS BAR -->
+  <div id="scroll-progress-bar"></div>
 
   <a class="floating-back" href="engines.html">← Back to Dashboard</a>
   <img src="assets/logo.png" style="position: fixed; top: 20px; right: 20px; width: 60px; z-index: 1000; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
@@ -19,6 +23,19 @@
     <!-- LEFT: STICKY 3D ENGINE -->
     <div class="sticky-3d">
       <div id="viewer" class="canvas-container" data-model="models/Inline_4_engine.glb"></div>
+      
+      <!-- DIAGNOSTIC HUD OVERLAY -->
+      <div id="part-hud" class="part-hud is-hidden">
+        <div class="hud-header">
+          <span class="hud-status">DIAGNOSTIC ACTIVE</span>
+          <div class="hud-line"></div>
+        </div>
+        <h3 id="hud-part-name">Engine Component</h3>
+        <p id="hud-part-desc">Analyzing part data from the database...</p>
+        <div class="hud-footer">
+          <span class="hud-hint">Click outside to dismiss</span>
+        </div>
+      </div>
     </div>
 
     <!-- RIGHT: SCROLLING STORY CARDS -->
@@ -31,6 +48,16 @@
         <p class="subtitle" style="font-size: 18px; line-height: 1.6;">
           Scroll down to explore how 4 cylinders in a single straight line work together to produce reliable power — the world's most popular engine layout, found in everything from economy cars to hot hatches.
         </p>
+        
+        <!-- SENSORY UPGRADE: REV ENGINE -->
+        <div class="rev-container" style="margin: 20px 0 40px;">
+          <button id="rev-btn" class="rev-btn">
+            <span class="rev-icon">🔊</span> REV ENGINE
+          </button>
+          <div class="rev-hint">Hold to high-RPM spin</div>
+          <audio id="engine-sound" src="assets/sounds/i4.mp3" loop></audio>
+        </div>
+
         <div class="scroll-indicator">
           <span>Scroll down to dissect</span>
           <div class="mouse-icon">🖱️</div>
@@ -38,117 +65,209 @@
       </section>
 
       <!-- 1. Intake Manifold -->
-      <section class="story-card" data-highlight="None">
-        <div class="step-num">01 / 10</div>
-        <h2>Intake Manifold</h2>
-        <div class="card-desc">
-          <p><b>Visual:</b> The structure sitting directly on top of the cylinder head, running the full length of all 4 cylinders.</p>
-          <p><b>Function:</b> Channels fresh air from the throttle body into each of the 4 intake ports equally. On a well-tuned I4, runner length is optimised for a specific rev range — longer runners build torque low down, shorter ones boost power at high RPM.</p>
+      <section class="story-card" data-highlight="Intake Manifold">
+        <div class="blueprint-card">
+          <div class="step-num">[ 01 / 10 ] SYS-I4-INT</div>
+          <h2>Intake Manifold</h2>
+          <div class="spec-grid">
+            <div class="spec-row">
+              <div class="spec-label">Internal Diagnostics</div>
+              <div class="spec-value">The cast-aluminum structure running the full length of the head.</div>
+            </div>
+            <div class="spec-row">
+              <div class="spec-label">System Function</div>
+              <div class="spec-value">Channels air from the throttle body into the 4 <b>Intake Ports</b> equally.</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- 2. Fuel Rail & Injectors -->
-      <section class="story-card" data-highlight="None">
-        <div class="step-num">02 / 10</div>
-        <h2>Fuel Rail & Injectors</h2>
-        <div class="card-desc">
-          <p><b>Visual:</b> A slender pipe running parallel along the intake manifold, with 4 injectors plugging directly into the ports.</p>
-          <p><b>Function:</b> Supplies pressurized fuel to each injector, which sprays a fine mist of petrol into the intake port at exactly the right moment before the intake valve opens. Modern I4s use direct injection — spraying straight into the cylinder at very high pressure.</p>
+      <section class="story-card" data-highlight="Fuel Rail + Injectors">
+        <div class="blueprint-card">
+          <div class="step-num">[ 02 / 10 ] SYS-I4-FL</div>
+          <h2>Fuel Rail & Injectors</h2>
+          <div class="spec-grid">
+            <div class="spec-row">
+              <div class="spec-label">Internal Diagnostics</div>
+              <div class="spec-value">Parallel slender pipe with 4 sequential injectors plugging into ports.</div>
+            </div>
+            <div class="spec-row">
+              <div class="spec-label">System Function</div>
+              <div class="spec-value">Supplies a fine mist of petrol into the port before <b>Intake Valve</b> ignition.</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- 3. Cylinder Head -->
-      <section class="story-card" data-highlight="None">
-        <div class="step-num">03 / 10</div>
-        <h2>Cylinder Head</h2>
-        <div class="card-desc">
-          <p><b>Visual:</b> A single long rectangular casting bolted flat across the top of the block — one head covers all 4 cylinders in a row.</p>
-          <p><b>Function:</b> Houses the entire valvetrain (camshafts, valves, springs, rockers) and forms the roof of every combustion chamber. The head gasket below it seals combustion pressures that can exceed 50 bar.</p>
+      <section class="story-card" data-highlight="Cylinder Head">
+        <div class="blueprint-card">
+          <div class="step-num">[ 03 / 10 ] SYS-I4-HD</div>
+          <h2>Cylinder Head</h2>
+          <div class="spec-grid">
+            <div class="spec-row">
+              <div class="spec-label">Internal Diagnostics</div>
+              <div class="spec-value">A single long rectangular casting bolted across the block top.</div>
+            </div>
+            <div class="spec-row">
+              <div class="spec-label">System Function</div>
+              <div class="spec-value">Houses the entire <b>Valvetrain</b> and acts as the combustion roof.</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- 4. Camshaft -->
-      <section class="story-card" data-highlight="None">
-        <div class="step-num">04 / 10</div>
-        <h2>Camshaft (DOHC)</h2>
-        <div class="card-desc">
-          <p><b>Visual:</b> Two long shafts with egg-shaped lobes running side by side the full length of the head — one for intake valves, one for exhaust.</p>
-          <p><b>Function:</b> Driven by the crankshaft at half its speed, each cam lobe pushes its valve open at exactly the right point in the piston's 4-stroke cycle. Variable valve timing (e.g., VTEC, VANOS) adjusts this timing on the fly for more power or better efficiency.</p>
+      <section class="story-card" data-highlight="Camshaft">
+        <div class="blueprint-card">
+          <div class="step-num">[ 04 / 10 ] SYS-I4-CS</div>
+          <h2>Camshaft (DOHC)</h2>
+          <div class="spec-grid">
+            <div class="spec-row">
+              <div class="spec-label">Internal Diagnostics</div>
+              <div class="spec-value">Two long shafts with egg-shaped lobes running side by side.</div>
+            </div>
+            <div class="spec-row">
+              <div class="spec-label">System Function</div>
+              <div class="spec-value">Pushes valves open at the exact point in the <b>4-Stroke Cycle</b>.</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- 5. Spark Plugs -->
-      <section class="story-card" data-highlight="None">
-        <div class="step-num">05 / 10</div>
-        <h2>Spark Plugs</h2>
-        <div class="card-desc">
-          <p><b>Visual:</b> 4 plugs threaded vertically into the head — one per cylinder, centred above the piston crown for the most efficient flame propagation.</p>
-          <p><b>Function:</b> Each plug fires a 20,000–40,000 volt spark at the precise moment the piston reaches the top of the compression stroke. This ignites the compressed air-fuel charge, causing a controlled explosion that drives the piston down.</p>
+      <section class="story-card" data-highlight="Spark Plugs">
+        <div class="blueprint-card">
+          <div class="step-num">[ 05 / 10 ] SYS-I4-IGN</div>
+          <h2>Spark Plugs</h2>
+          <div class="spec-grid">
+            <div class="spec-row">
+              <div class="spec-label">Internal Diagnostics</div>
+              <div class="spec-value">4 plugs threaded vertically into the cylinder head.</div>
+            </div>
+            <div class="spec-row">
+              <div class="spec-label">System Function</div>
+              <div class="spec-value">Fires a 20kV+ spark at the peak of <b>Compression</b> to ignite the charge.</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- 6. Cylinder Block -->
-      <section class="story-card" data-highlight="None">
-        <div class="step-num">06 / 10</div>
-        <h2>Cylinder Block</h2>
-        <div class="card-desc">
-          <p><b>Visual:</b> A compact, upright rectangular block — all 4 cylinder bores are arranged in a single straight vertical row.</p>
-          <p><b>Function:</b> The engine's backbone. Cast from iron or aluminium, it contains the 4 precision-honed bores, coolant water jackets surrounding each cylinder to control temperature, and main oil galleries feeding every moving part.</p>
+      <section class="story-card" data-highlight="Cylinder Block">
+        <div class="blueprint-card">
+          <div class="step-num">[ 06 / 10 ] SYS-I4-BLK</div>
+          <h2>Cylinder Block</h2>
+          <div class="spec-grid">
+            <div class="spec-row">
+              <div class="spec-label">Internal Diagnostics</div>
+              <div class="spec-value">A compact, upright rectangular block with 4 vertical cylinder bores.</div>
+            </div>
+            <div class="spec-row">
+              <div class="spec-label">System Function</div>
+              <div class="spec-value">The engine's primary backbone; contains <b>Oil Galleries</b> and water jackets.</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- 7. Pistons & Connecting Rods -->
-      <section class="story-card" data-highlight="None">
-        <div class="step-num">07 / 10</div>
-        <h2>Pistons & Connecting Rods</h2>
-        <div class="card-desc">
-          <p><b>Visual:</b> 4 cylindrical pistons moving up and down in the bores, each attached via a conrod to the crank below.</p>
-          <p><b>Function:</b> Each piston goes through 4 strokes: Intake (down), Compression (up), Power (down), Exhaust (up). The I4 fires in the order 1-3-4-2, with a power stroke every 180° of crankshaft rotation, giving a steady but characteristic thrum.</p>
+      <section class="story-card" data-highlight="Pistons">
+        <div class="blueprint-card">
+          <div class="step-num">[ 07 / 10 ] SYS-I4-PST</div>
+          <h2>Pistons & Rods</h2>
+          <div class="spec-grid">
+            <div class="spec-row">
+              <div class="spec-label">Internal Diagnostics</div>
+              <div class="spec-value">4 cylindrical pistons firing in the specific <b>1-3-4-2</b> sequence.</div>
+            </div>
+            <div class="spec-row">
+              <div class="spec-label">System Function</div>
+              <div class="spec-value">Convert vertical pressure into linear motion via <b>Connecting Rods</b>.</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- 8. Crankshaft -->
-      <section class="story-card" data-highlight="None">
-        <div class="step-num">08 / 10</div>
-        <h2>Crankshaft</h2>
-        <div class="card-desc">
-          <p><b>Visual:</b> A single straight crankshaft at the base of the block, with 4 offset crank pins at 180° intervals.</p>
-          <p><b>Function:</b> Converts all 4 pistons' linear motion into rotation. Because pistons 1 & 4 always move together (and 2 & 3 together), a secondary imbalance at twice engine speed is created — this is why most performance I4s include a Lanchester balance shaft system to eliminate vibration.</p>
+      <section class="story-card" data-highlight="Crankshaft">
+        <div class="blueprint-card">
+          <div class="step-num">[ 08 / 10 ] SYS-I4-CRK</div>
+          <h2>Crankshaft</h2>
+          <div class="spec-grid">
+            <div class="spec-row">
+              <div class="spec-label">Internal Diagnostics</div>
+              <div class="spec-value">A single straight crankshaft with 4 offset pins at 180° intervals.</div>
+            </div>
+            <div class="spec-row">
+              <div class="spec-label">System Function</div>
+              <div class="spec-value">Converts the combined piston motion into high-velocity <b>Rotation</b>.</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- 9. Timing System -->
-      <section class="story-card" data-highlight="None">
-        <div class="step-num">09 / 10</div>
-        <h2>Timing Belt / Chain</h2>
-        <div class="card-desc">
-          <p><b>Visual:</b> Runs up one end of the engine, linking the crankshaft sprocket at the bottom to the two cam sprockets at the top.</p>
-          <p><b>Function:</b> Maintains the critical 2:1 ratio between the crankshaft and camshafts. If this synchronisation is lost — from a snapped belt or jumped chain — pistons will collide with open valves causing catastrophic and instant engine failure.</p>
+      <section class="story-card" data-highlight="Timing Belt / Timing Chain">
+        <div class="blueprint-card">
+          <div class="step-num">[ 09 / 10 ] SYS-I4-TIB</div>
+          <h2>Timing Belt / Chain</h2>
+          <div class="spec-grid">
+            <div class="spec-row">
+              <div class="spec-label">Internal Diagnostics</div>
+              <div class="spec-value">High-tensile link connecting the crankshaft to the dual cams.</div>
+            </div>
+            <div class="spec-row">
+              <div class="spec-label">System Function</div>
+              <div class="spec-value">Maintains the critical <b>2:1 Ratio</b> to prevent piston-valve collision.</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- 10. Oil System -->
-      <section class="story-card" data-highlight="None">
-        <div class="step-num">10 / 10</div>
-        <h2>Oil Pan & Pump</h2>
-        <div class="card-desc">
-          <p><b>Visual:</b> The shallow pressed-steel or cast aluminium pan bolted under the entire block, forming the engine's base.</p>
-          <p><b>Function:</b> Holds 4–5 litres of engine oil. The crankshaft-driven oil pump sucks from here and pushes oil at 40–60 PSI through galleries to every bearing, cam lobe, and cylinder wall. Without this, the engine seizes within seconds.</p>
+      <section class="story-card" data-highlight="Oil Pan">
+        <div class="blueprint-card">
+          <div class="step-num">[ 10 / 10 ] SYS-I4-SUM</div>
+          <h2>Oil Pan & Sump</h2>
+          <div class="spec-grid">
+            <div class="spec-row">
+              <div class="spec-label">Internal Diagnostics</div>
+              <div class="spec-value">The stamped-steel pan forming the engine's structural base.</div>
+            </div>
+            <div class="spec-row">
+              <div class="spec-label">System Function</div>
+              <div class="spec-value">The primary oil reservoir block; essential for <b>Vibration Damping</b>.</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- Outro Card -->
       <section class="story-card outro" data-highlight="None">
-        <h2>End of Tour</h2>
-        <p>You've just traced the complete 4-stroke combustion cycle of an Inline 4 — from fresh air through the intake manifold, to the crankshaft spinning your wheels, to the oil keeping every part alive.</p>
-        <button class="explore-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="margin-top: 40px;">
-          ↑ Return to Top
-        </button>
+        <div class="blueprint-card">
+          <div class="step-num">TOUR SEQUENCE COMPLETE</div>
+          <h2>System Offline</h2>
+          <p style="margin-bottom: 30px;">You've just traced the complete 4-stroke combustion cycle of the Inline 4 assembly.</p>
+          <button class="rev-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="width: 100%; justify-content: center;">
+            ↑ RETURN TO MISSION START
+          </button>
+        </div>
       </section>
 
     </div>
   </div>
 
   <script type="module" src="js/main.js"></script>
+  <script>
+    const bar = document.getElementById('scroll-progress-bar');
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = total > 0 ? (scrolled / total) * 100 : 0;
+      if (bar) bar.style.width = pct + '%';
+    });
+  </script>
 </body>
 </html>

@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Inline 6 Engine 3D Scrollytelling — Discover why engineers call the I6 the perfect engine. Compete in our engine quiz to test your knowledge or ask the assistant.">
   <title>Inline 6 Engine - Scrollytelling</title>
   <link rel="icon" href="assets/logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -10,6 +11,9 @@
   <link rel="stylesheet" href="css/viewer.css">
 </head>
 <body class="scrolly-body">
+
+  <!-- SCROLL PROGRESS BAR -->
+  <div id="scroll-progress-bar"></div>
 
   <a class="floating-back" href="engines.html">← Back to Dashboard</a>
   <img src="assets/logo.png" style="position: fixed; top: 20px; right: 20px; width: 60px; z-index: 1000; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
@@ -19,6 +23,19 @@
     <!-- LEFT: STICKY 3D ENGINE -->
     <div class="sticky-3d">
       <div id="viewer" class="canvas-container" data-model="models/Inline_6_engine.glb"></div>
+      
+      <!-- DIAGNOSTIC HUD OVERLAY -->
+      <div id="part-hud" class="part-hud is-hidden">
+        <div class="hud-header">
+          <span class="hud-status">DIAGNOSTIC ACTIVE</span>
+          <div class="hud-line"></div>
+        </div>
+        <h3 id="hud-part-name">Engine Component</h3>
+        <p id="hud-part-desc">Analyzing part data from the database...</p>
+        <div class="hud-footer">
+          <span class="hud-hint">Click outside to dismiss</span>
+        </div>
+      </div>
     </div>
 
     <!-- RIGHT: SCROLLING STORY CARDS -->
@@ -31,6 +48,16 @@
         <p class="subtitle" style="font-size: 18px; line-height: 1.6;">
           Scroll down to discover why engineers call the Inline 6 the "perfect" engine — 6 cylinders in a straight line that cancel each other's vibrations to produce an inherently, mathematically smooth power delivery.
         </p>
+        
+        <!-- SENSORY UPGRADE: REV ENGINE -->
+        <div class="rev-container" style="margin: 20px 0 40px;">
+          <button id="rev-btn" class="rev-btn">
+            <span class="rev-icon">🔊</span> REV ENGINE
+          </button>
+          <div class="rev-hint">Hold to high-RPM spin</div>
+          <audio id="engine-sound" src="assets/sounds/i6.mp3" loop></audio>
+        </div>
+
         <div class="scroll-indicator">
           <span>Scroll down to dissect</span>
           <div class="mouse-icon">🖱️</div>
@@ -39,116 +66,208 @@
 
       <!-- 1. Intake Manifold -->
       <section class="story-card" data-highlight="Intake Manifold">
-        <div class="step-num">01 / 10</div>
-        <h2>Intake Manifold</h2>
-        <div class="card-desc">
-          <p><b>Visual:</b> A long runner assembly sitting on top of the cylinder head, spanning all 6 intake ports along the top of the engine.</p>
-          <p><b>Function:</b> Distributes airflow evenly from a single throttle body into all 6 cylinders. The longer the runners, the more low-rpm torque. Many modern I6s use variable-length intake manifolds (VLIM) to shift peak torque dynamically across the rev range.</p>
+        <div class="blueprint-card">
+          <div class="step-num">[ 01 / 10 ] SYS-I6-INT</div>
+          <h2>Intake Manifold</h2>
+          <div class="spec-grid">
+            <div class="spec-row">
+              <div class="spec-label">Internal Diagnostics</div>
+              <div class="spec-value">A long runner assembly sitting horizontally along the cylinder head.</div>
+            </div>
+            <div class="spec-row">
+              <div class="spec-label">System Function</div>
+              <div class="spec-value">Optimizes <b>Airflow Velocity</b> from a single throttle body to all 6 ports.</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- 2. Fuel Rail & Injectors -->
-      <section class="story-card" data-highlight="Fuel Rail">
-        <div class="step-num">02 / 10</div>
-        <h2>Fuel Rail & Injectors</h2>
-        <div class="card-desc">
-          <p><b>Visual:</b> A single long pipe running the full length of all 6 cylinders, with 6 injectors feeding into the ports or directly into each bore.</p>
-          <p><b>Function:</b> Maintains a constant fuel pressure rail that all 6 injectors draw from. In modern I6s (BMW B58, Toyota 2JZ, etc.), high-pressure direct injection sprays fuel at up to 350 bar directly into the combustion chamber for precise metering and efficiency.</p>
+      <section class="story-card" data-highlight="Fuel Rail + Injectors">
+        <div class="blueprint-card">
+          <div class="step-num">[ 02 / 10 ] SYS-I6-FL</div>
+          <h2>Fuel Rail & Injectors</h2>
+          <div class="spec-grid">
+            <div class="spec-row">
+              <div class="spec-label">Internal Diagnostics</div>
+              <div class="spec-value">High-capacity fuel rail supplying 6 precision-metered injectors.</div>
+            </div>
+            <div class="spec-row">
+              <div class="spec-label">System Function</div>
+              <div class="spec-value">Maintains 350+ bar <b>Direct Injection</b> for peak efficiency and atomization.</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- 3. Cylinder Head -->
       <section class="story-card" data-highlight="Cylinder Head">
-        <div class="step-num">03 / 10</div>
-        <h2>Cylinder Head</h2>
-        <div class="card-desc">
-          <p><b>Visual:</b> A single, long rectangular casting running the full length of the straight block — one head sealing all 6 combustion chambers in a row.</p>
-          <p><b>Function:</b> Contains the full valvetrain for all 6 cylinders. Its length can cause thermal expansion challenges, which is why I6 heads are engineered with multiple coolant flow paths. The combustion chamber shape here is critical to achieving the engine's high efficiency.</p>
+        <div class="blueprint-card">
+          <div class="step-num">[ 03 / 10 ] SYS-I6-HD</div>
+          <h2>Cylinder Head</h2>
+          <div class="spec-grid">
+            <div class="spec-row">
+              <div class="spec-label">Internal Diagnostics</div>
+              <div class="spec-value">A singular, long-casting sealing all 6 sequential combustion chambers.</div>
+            </div>
+            <div class="spec-row">
+              <div class="spec-label">System Function</div>
+              <div class="spec-value">Regulates <b>Thermal Expansion</b> while activing the complex 24-valve valvetrain.</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- 4. Camshaft -->
       <section class="story-card" data-highlight="Camshaft">
-        <div class="step-num">04 / 10</div>
-        <h2>Camshaft (Twin Cam)</h2>
-        <div class="card-desc">
-          <p><b>Visual:</b> Two very long camshafts running the full length of the head, each operating 12 valves (2 intake + 2 exhaust per cylinder = 24 valves total).</p>
-          <p><b>Function:</b> The length of the I6 camshaft makes it inherently more flexible — engineers counteract this with additional bearing journals. On iconic engines like the BMW M50 or Toyota 2JZ, the DOHC setup with variable timing gives silky power across the entire rev range.</p>
+        <div class="blueprint-card">
+          <div class="step-num">[ 04 / 10 ] SYS-I6-CS</div>
+          <h2>Camshaft (Twin Cam)</h2>
+          <div class="spec-grid">
+            <div class="spec-row">
+              <div class="spec-label">Internal Diagnostics</div>
+              <div class="spec-value">Two ultra-long shafts operating 24 valves (4 per cylinder).</div>
+            </div>
+            <div class="spec-row">
+              <div class="spec-label">System Function</div>
+              <div class="spec-value">Counteracts inherent shaft flex for <b>Silky Power</b> delivery across the rev range.</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- 5. Spark Plugs -->
       <section class="story-card" data-highlight="Spark Plugs">
-        <div class="step-num">05 / 10</div>
-        <h2>Spark Plugs</h2>
-        <div class="card-desc">
-          <p><b>Visual:</b> 6 plugs (one per cylinder) threaded into the head in a neat single row along the top of the engine.</p>
-          <p><b>Function:</b> The I6 fires every 120° of crankshaft rotation (360° × 2 strokes ÷ 6 cylinders = 120°). This means a power stroke fires more frequently than a 4-cylinder, contributing to the engine's characteristic smoothness and linear power delivery.</p>
+        <div class="blueprint-card">
+          <div class="step-num">[ 05 / 10 ] SYS-I6-IGN</div>
+          <h2>Spark Plugs</h2>
+          <div class="spec-grid">
+            <div class="spec-row">
+              <div class="spec-label">Internal Diagnostics</div>
+              <div class="spec-value">6 sequential spark plugs firing in 120° crankshaft intervals.</div>
+            </div>
+            <div class="spec-row">
+              <div class="spec-label">System Function</div>
+              <div class="spec-value">Maintains mathematical <b>Internal Balance</b> through high-frequency ignition.</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- 6. Cylinder Block -->
       <section class="story-card" data-highlight="Cylinder Block">
-        <div class="step-num">06 / 10</div>
-        <h2>Cylinder Block</h2>
-        <div class="card-desc">
-          <p><b>Visual:</b> A tall, long, straight rectangular block — all 6 cylinders aligned vertically in a single row, unlike a V-engine which splits into two banks.</p>
-          <p><b>Function:</b> The structural heart of the engine. Its straight architecture makes it inherently stiffer than a V6 for the same displacement, resisting torsional flex under heavy loads. This is why lorry and performance car engines favour the I6 layout.</p>
+        <div class="blueprint-card">
+          <div class="step-num">[ 06 / 10 ] SYS-I6-BLK</div>
+          <h2>Cylinder Block</h2>
+          <div class="spec-grid">
+            <div class="spec-row">
+              <div class="spec-label">Internal Diagnostics</div>
+              <div class="spec-value">A tall, straight rectangular block with all 6 cylinders in one row.</div>
+            </div>
+            <div class="spec-row">
+              <div class="spec-label">System Function</div>
+              <div class="spec-value">Provides an inherently stiffer architecture for <b>Torsional Stability</b>.</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- 7. Pistons & Connecting Rods -->
       <section class="story-card" data-highlight="Pistons">
-        <div class="step-num">07 / 10</div>
-        <h2>Pistons & Connecting Rods</h2>
-        <div class="card-desc">
-          <p><b>Visual:</b> 6 pistons moving vertically in their bores, each with a forged conrod angling down to the crankshaft.</p>
-          <p><b>Function:</b> The I6 firing order is typically 1-5-3-6-2-4. Because pairs of pistons (1&6, 2&5, 3&4) always move in perfect opposition, they cancel each other's inertia forces — this is why the I6 needs no balance shafts and is mathematically perfectly balanced.</p>
+        <div class="blueprint-card">
+          <div class="step-num">[ 07 / 10 ] SYS-I6-PST</div>
+          <h2>Pistons & Rods</h2>
+          <div class="spec-grid">
+            <div class="spec-row">
+              <div class="spec-label">Internal Diagnostics</div>
+              <div class="spec-value">6 forged pistons firing in the iconic 1-5-3-6-2-4 sequence.</div>
+            </div>
+            <div class="spec-row">
+              <div class="spec-label">System Function</div>
+              <div class="spec-value">Mathematically cancels inertia forces for <b>Perfect Primary Balance</b>.</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- 8. Crankshaft -->
       <section class="story-card" data-highlight="Crankshaft">
-        <div class="step-num">08 / 10</div>
-        <h2>Crankshaft</h2>
-        <div class="card-desc">
-          <p><b>Visual:</b> A long, precisely counterweighted crank with 6 pins spaced at 120° intervals, running the full length of the block.</p>
-          <p><b>Function:</b> This is the engineering marvel of the I6. The 120° crank pin spacing means all reciprocating and rotating forces cancel out perfectly — no secondary imbalance, no need for balance shafts. The result is an engine that revs with silk-smooth linearity that no V6 can match.</p>
+        <div class="blueprint-card">
+          <div class="step-num">[ 08 / 10 ] SYS-I6-CRK</div>
+          <h2>Crankshaft</h2>
+          <div class="spec-grid">
+            <div class="spec-row">
+              <div class="spec-label">Internal Diagnostics</div>
+              <div class="spec-value">High-precision counterweighted crank with 6 pins at 120° intervals.</div>
+            </div>
+            <div class="spec-row">
+              <div class="spec-label">System Function</div>
+              <div class="spec-value">Delivers <b>Linear Torque</b> with zero primary or secondary vibration.</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- 9. Timing System -->
-      <section class="story-card" data-highlight="Timing Chain">
-        <div class="step-num">09 / 10</div>
-        <h2>Timing Chain</h2>
-        <div class="card-desc">
-          <p><b>Visual:</b> Typically a duplex (double-row) chain or belt at the front of the engine — I6s favour chains due to durability requirements of the longer valvetrain.</p>
-          <p><b>Function:</b> Maintains the critical 2:1 ratio between the crankshaft and both camshafts. The longer chain on an I6 uses tensioners to maintain precise tension across the full length — a critical design point since chain slack causes valve timing errors and engine knock.</p>
+      <section class="story-card" data-highlight="Timing Belt / Timing Chain">
+        <div class="blueprint-card">
+          <div class="step-num">[ 09 / 10 ] SYS-I6-TIB</div>
+          <h2>Timing Belt / Chain</h2>
+          <div class="spec-grid">
+            <div class="spec-row">
+              <div class="spec-label">Internal Diagnostics</div>
+              <div class="spec-value">Duplex-row chain anchoring the deep-row 24-valve assembly.</div>
+            </div>
+            <div class="spec-row">
+              <div class="spec-label">System Function</div>
+              <div class="spec-value">Maintains <b>2:1 Precision</b> to suppress chain slack and timing drift.</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- 10. Oil System -->
       <section class="story-card" data-highlight="Oil Pan">
-        <div class="step-num">10 / 10</div>
-        <h2>Oil Pan & Pump</h2>
-        <div class="card-desc">
-          <p><b>Visual:</b> A deep, full-length sump pan bolted under the block — longer than an I4 pan to cover the full 6-cylinder bore span.</p>
-          <p><b>Function:</b> Holds 6–8 litres of engine oil for the longer gallery network an I6 requires. The high-pressure pump ensures oil reaches distant bearings — including the far end of the long crankshaft — before the engine even fully starts. Dry-sump systems are used in performance variants to prevent oil starvation under high-g cornering.</p>
+        <div class="blueprint-card">
+          <div class="step-num">[ 10 / 10 ] SYS-I6-SUM</div>
+          <h2>Oil Pan & Sump</h2>
+          <div class="spec-grid">
+            <div class="spec-row">
+              <div class="spec-label">Internal Diagnostics</div>
+              <div class="spec-value">Long, deep-sump pan covering the full 6-cylinder bore span.</div>
+            </div>
+            <div class="spec-row">
+              <div class="spec-label">System Function</div>
+              <div class="spec-value">Stores 8+ litres of lubricant for <b>Thermal Dissipation</b>.</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- Outro Card -->
       <section class="story-card outro" data-highlight="None">
-        <h2>End of Tour</h2>
-        <p>You've just explored the architecture of one of engineering's most celebrated layouts. The Inline 6's perfect primary and secondary balance is why legends like the BMW M3, Toyota Supra, and Nissan Skyline GT-R chose it as their foundation.</p>
-        <button class="explore-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="margin-top: 40px;">
-          ↑ Return to Top
-        </button>
+        <div class="blueprint-card">
+          <div class="step-num">TOUR SEQUENCE COMPLETE</div>
+          <h2>System Offline</h2>
+          <p style="margin-bottom: 30px;">You've just witnessed the flawless mechanical synchronization of the Inline 6 assembly.</p>
+          <button class="rev-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="width: 100%; justify-content: center;">
+            ↑ RETURN TO MISSION START
+          </button>
+        </div>
       </section>
 
     </div>
   </div>
 
   <script type="module" src="js/main.js"></script>
+  <script>
+    const bar = document.getElementById('scroll-progress-bar');
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = total > 0 ? (scrolled / total) * 100 : 0;
+      if (bar) bar.style.width = pct + '%';
+    });
+  </script>
 </body>
 </html>

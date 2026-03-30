@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Revora — Page not found. Return to the Mission Control dashboard.">
+  <title>404 - Revora</title>
+  <link rel="icon" href="assets/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: #0A0E17;
+      background-image:
+        radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .wrapper {
+      padding: 40px 20px;
+      max-width: 600px;
+    }
+
+    .error-code {
+      font-size: 160px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -8px;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 50%, #ffffff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glitch 4s infinite;
+    }
+
+    @keyframes glitch {
+
+      0%,
+      90%,
+      100% {
+        text-shadow: none;
+        filter: none;
+      }
+
+      91% {
+        text-shadow: -3px 0 #ffffff;
+        filter: blur(0.5px);
+      }
+
+      92% {
+        text-shadow: 3px 0 #ef4444;
+        filter: blur(0);
+      }
+
+      93% {
+        text-shadow: -2px 0 #94a3b8;
+        filter: blur(0.3px);
+      }
+
+      94% {
+        text-shadow: none;
+        filter: none;
+      }
+    }
+
+    .tag {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--blue);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #f8fafc;
+    }
+
+    p {
+      font-size: 16px;
+      color: #64748b;
+      line-height: 1.6;
+      margin-bottom: 40px;
+    }
+
+    .nav-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .nav-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 16px 10px;
+      text-decoration: none;
+      color: #94a3b8;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-pill:hover {
+      background: rgba(56, 189, 248, 0.08);
+      border-color: rgba(56, 189, 248, 0.4);
+      color: var(--blue);
+      transform: translateY(-4px);
+    }
+
+    .nav-pill span {
+      font-size: 24px;
+    }
+
+    .terminal-line {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: #334155;
+      letter-spacing: 1px;
+    }
+
+    .terminal-line .err {
+      color: var(--purple);
+    }
+
+    .terminal-line .ok {
+      color: #10b981;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="error-code">404</div>
+    <div class="tag">ROUTE NOT FOUND</div>
+    <h1>Page Does Not Exist</h1>
+    <p>The schematic you're looking for isn't in the database. Return to Mission Control and try a valid sequence.</p>
+
+    <div class="nav-grid">
+      <a href="index.html" class="nav-pill"><span>🏠</span>Dashboard</a>
+      <a href="engines.html" class="nav-pill"><span>🏎️</span>Engines</a>
+      <a href="parts.html" class="nav-pill"><span>🔩</span>Parts</a>
+      <a href="compare.html" class="nav-pill"><span>⚖️</span>Compare</a>
+      <a href="quiz.html" class="nav-pill"><span>🧠</span>Quiz</a>
+      <a href="assistant.html" class="nav-pill"><span>🤖</span>Assistant</a>
+      <a href="about.html" class="nav-pill"><span>ℹ️</span>About</a>
+    </div>
+
+    <div class="terminal-line">
+      > GET /unknown-path <span class="err">→ 404 NOT FOUND</span><br>
+      > SYSTEM REDIRECT: <span class="ok">Awaiting user selection...</span>
+    </div>
+  </div>
+</body>
+
+</html>

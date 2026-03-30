@@ -1,0 +1,110 @@
+{
+  "piston": {
+    "answer": "A **Piston** is a cylindrical component that moves up and down inside the engine's cylinder. It's pushed by the explosion of the air-fuel mixture, converting that energy into kinetic motion. It is the heart of the combustion process.",
+    "link": "parts.html"
+  },
+  "crankshaft": {
+    "answer": "The **Crankshaft** sits at the bottom of the engine. It takes the linear (up-and-down) motion from the pistons and converts it into rotational motion—which eventually spins your wheels! It's the most high-stress component in the block.",
+    "link": "parts.html"
+  },
+  "camshaft": {
+    "answer": "The **Camshaft** is responsible for opening and closing the engine's valves at exactly the right time. It's synchronized with the crankshaft via the timing belt or chain. Modern engines often have two (DOHC).",
+    "link": "parts.html"
+  },
+  "valves": {
+    "answer": "Engine **Valves** act as gates. Intake valves allow air/fuel into the cylinder, and exhaust valves allow burnt gases to escape. They are precisely timed by the camshaft to maximize volumetric efficiency.",
+    "link": "parts.html"
+  },
+  "connecting rod": {
+    "answer": "The **Connecting Rod** (or Con-Rod) links the piston to the crankshaft. It must be incredibly strong yet light, as it changes direction thousands of times per minute at high RPMs.",
+    "link": "parts.html"
+  },
+  "cylinder head": {
+    "answer": "The **Cylinder Head** sits on top of the engine block. It contains the combustion chambers, valves, sparks plugs, and (in many engines) the camshafts. It's where the 'breathing' of the engine happens.",
+    "link": "parts.html"
+  },
+  "flywheel": {
+    "answer": "A **Flywheel** is a heavy disk attached to the crankshaft. It stores kinetic energy to smooth out the power pulses of the cylinders and provides the surface for the clutch to engage.",
+    "link": "parts.html"
+  },
+  "oil pan": {
+    "answer": "The **Oil Pan** (or Sump) is the reservoir at the bottom of the engine that holds the motor oil. The oil pump sucks oil from here to lubricate the entire engine.",
+    "link": null
+  },
+  "gasket": {
+    "answer": "A **Gasket** (like the Head Gasket) is a seal between two metal surfaces. It prevents fluids (oil/coolant) and gases from leaking out of the engine under high pressure.",
+    "link": null
+  },
+  "dohc": {
+    "answer": "**DOHC** (Double OverHead Cam) means there are two camshafts per cylinder bank—one for intake valves and one for exhaust. This allows for better airflow and higher RPM potential.",
+    "link": "about.html"
+  },
+  "sohc": {
+    "answer": "**SOHC** (Single OverHead Cam) uses one camshaft to operate both intake and exhaust valves. It's simpler and lighter than DOHC but generally less efficient at high RPMs.",
+    "link": null
+  },
+  "vvt": {
+    "answer": "**VVT** (Variable Valve Timing) allows the engine to change when the valves open and close based on RPM. This improves low-end torque and high-end horsepower at the same time.",
+    "link": null
+  },
+  "timing belt": {
+    "answer": "The **Timing Belt** (or Chain) synchronizes the rotation of the crankshaft and camshaft. If it breaks in an 'interference engine', the pistons will hit the valves, causing catastrophic damage.",
+    "link": "parts.html"
+  },
+  "rocker arm": {
+    "answer": "**Rocker Arms** are levers that translate the camshaft's motion into valve-opening motion. They 'rock' back and forth to push the valves down.",
+    "link": null
+  },
+  "pushrod": {
+    "answer": "**Pushrod** engines (OHV) use long rods to move rocker arms from a camshaft located deep in the engine block. It's a classic, compact design used in many American V8s.",
+    "link": null
+  },
+  "turbo": {
+    "answer": "A **Turbocharger** uses exhaust gases to spin a turbine, which forces more air into the engine. More air + more fuel = a much bigger explosion and significantly more power.",
+    "link": "engines.html"
+  },
+  "supercharger": {
+    "answer": "A **Supercharger** is mechanically driven by the engine's belt (unlike a turbo). It provides instant boost without 'turbo lag', but draws some power from the engine to operate.",
+    "link": "engines.html"
+  },
+  "intercooler": {
+    "answer": "An **Intercooler** is a heat exchanger that cools down the air compressed by a turbo or supercharger before it enters the engine. Cold air is denser and contains more oxygen for better combustion.",
+    "link": null
+  },
+  "wastegate": {
+    "answer": "A **Wastegate** is a valve that diverts exhaust gases away from the turbo's turbine to control the boost pressure and prevent the engine from over-boosting and exploding.",
+    "link": null
+  },
+  "blow-off valve": {
+    "answer": "A **Blow-Off Valve** (BOV) releases pressure from the intake system when you lift off the throttle. This prevents air from surging back into the turbo compressor.",
+    "link": null
+  },
+  "v8": {
+    "answer": "A **V8** engine features 8 cylinders arranged in a 'V' shape. It is known for its high torque and signature 'v8 rumble'—the holy grail of performance for many enthusiasts.",
+    "link": "v8.html"
+  },
+  "v6": {
+    "answer": "A **V6** engine has 6 cylinders in two banks of 3. It's a compact alternative to the V8, offering good power-to-weight and efficiency.",
+    "link": "engines.html"
+  },
+  "i6": {
+    "answer": "The **Inline 6** (or I6) is a legendary layout with 6 cylinders in a row. It is naturally balanced due to its firing order, making it incredibly smooth.",
+    "link": "inline6.html"
+  },
+  "i4": {
+    "answer": "The **Inline 4** is the most common engine in the world. It's efficient, compact, and powers everything from commuters to high-boost sports cars.",
+    "link": "inline4.html"
+  },
+  "displacement": {
+    "answer": "**Displacement** is the total volume of all cylinders in an engine (e.g., 5.0L). More displacement usually means more potential for power.",
+    "link": "compare.html"
+  },
+  "horsepower": {
+    "answer": "**Horsepower** (HP) measures how fast an engine can perform work. It determines a car's top speed and overall performance at high RPM.",
+    "link": "compare.html"
+  },
+  "torque": {
+    "answer": "**Torque** is the rotational force of the engine—the 'grunt' that gets you moving from a stop. Enthusiasts say: 'Horsepower sells cars, Torque wins races.'",
+    "link": "compare.html"
+  }
+}

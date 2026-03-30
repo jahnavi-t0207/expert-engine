@@ -1,62 +1,52 @@
 import { initViewer } from "./viewer.js";
+import { EngineAudio } from "./audio.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  // 1. Initialize 3D Viewer
+  initViewer();
 
-const viewer = document.getElementById("viewer");
-const container = document.getElementById("engineContainer");
+  // 2. Initialize Audio System (V8 specific for now)
+  const startBtn = document.getElementById("start-btn");
+  const revBtn = document.getElementById("rev-btn");
 
-/* ---------- LOAD 3D VIEWER ONLY IF PRESENT ---------- */
+  if (startBtn && revBtn) {
+    const audio = new EngineAudio('v8');
+    let isStarted = false;
 
-if(viewer){
-    initViewer();
-}
-
-/* ---------- LOAD ENGINE CARDS ONLY IF CONTAINER EXISTS ---------- */
-
-if(container){
-
-    fetch("http://localhost:5000/api/engines")
-    .then(res => res.json())
-    .then(data => {
-
-        data.forEach(engine => {
-
-            const card = document.createElement("div");
-            card.classList.add("engine-card");
-
-            card.innerHTML = `
-                <h3>${engine.name}</h3>
-                <p><b>Cylinders:</b> ${engine.cylinders}</p>
-                <p><b>Power:</b> ${engine.power}</p>
-                <p><b>Efficiency:</b> ${engine.efficiency}</p>
-                <button onclick="openEngine('${engine.name}')">
-                    Explore
-                </button>
-            `;
-
-            container.appendChild(card);
-
-        });
-
-    })
-    .catch(err=>{
-        console.log("Backend not running:", err);
+    startBtn.addEventListener("click", () => {
+      if (!isStarted) {
+        audio.start();
+        startBtn.innerHTML = "<span class='rev-icon'>⏹</span> SHUT DOWN";
+        startBtn.style.border = "2px solid var(--red)";
+        startBtn.style.color = "var(--red)";
+        revBtn.disabled = false;
+        isStarted = true;
+      } else {
+        audio.stop();
+        startBtn.innerHTML = "<span class='rev-icon'>⚡</span> START ENGINE";
+        startBtn.style.border = "2px solid var(--blue)";
+        startBtn.style.color = "var(--blue)";
+        revBtn.disabled = true;
+        isStarted = false;
+      }
     });
 
-}
+    revBtn.addEventListener("click", () => {
+      audio.rev();
+      const viewer = document.querySelector(".canvas-container");
+      if (viewer) {
+        viewer.classList.add("revving-glow");
+        setTimeout(() => viewer.classList.remove("revving-glow"), 1200);
+      }
+    });
+  }
 
-/* ---------- OPEN VIEWER ---------- */
-
-window.openEngine = function(name){
-
-    if(name === "V8 Engine"){
-        window.location.href = "v8.html";
-    } else if (name === "Inline 4 Engine" || name === "Inline 4") {
-        window.location.href = "inline4.html";
-    } else if (name === "Inline 6 Engine" || name === "Inline 6") {
-        window.location.href = "inline6.html";
-    }
-
-};
-
+  // 3. Engine Navigation Logic
+  const engines = document.querySelectorAll(".dash-engine-portal");
+  engines.forEach(eng => {
+    eng.addEventListener("click", () => {
+      const type = eng.getAttribute("data-engine");
+      if (type) window.location.href = `${type}.html`;
+    });
+  });
 });

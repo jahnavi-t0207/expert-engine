@@ -1,0 +1,83 @@
+{
+  "easy": [
+    {
+      "q": "What component moves up and down inside the cylinder?",
+      "o": ["Crankshaft", "Piston", "Camshaft", "Spark Plug"],
+      "a": 1
+    },
+    {
+      "q": "Which part creates the electrical spark for ignition?",
+      "o": ["Valves", "Oil Pump", "Spark Plug", "Fuel Rail"],
+      "a": 2
+    },
+    {
+      "q": "True or False: The radiator is part of the cooling system.",
+      "o": ["True", "False"],
+      "a": 0
+    },
+    {
+      "q": "What is the primary foundation 'block' of the engine?",
+      "o": ["Cylinder Block", "Oil Pan", "Cylinder Head", "Turbo"],
+      "a": 0
+    },
+    {
+      "q": "How many cylinders does a standard V8 engine have?",
+      "o": ["4", "6", "8", "12"],
+      "a": 2
+    }
+  ],
+  "medium": [
+    {
+      "q": "What part converts linear piston motion into rotational motion?",
+      "o": ["Camshaft", "Timing Belt", "Flywheel", "Crankshaft"],
+      "a": 3
+    },
+    {
+      "q": "Which system is responsible for smoothing out engine noise?",
+      "o": ["Intake Manifold", "Muffler", "Throttle Body", "Fuel Injector"],
+      "a": 1
+    },
+    {
+      "q": "What is the purpose of the oil pump?",
+      "o": ["To burn fuel", "To cool air", "To lubricate engine parts", "To open valves"],
+      "a": 2
+    },
+    {
+      "q": "A DOHC system has how many camshafts per cylinder head?",
+      "o": ["One", "Two", "Three", "Four"],
+      "a": 1
+    },
+    {
+      "q": "VVT stands for Variable Valve ___?",
+      "o": ["Timing", "Tension", "Torque", "Temperature"],
+      "a": 0
+    }
+  ],
+  "hard": [
+    {
+      "q": "What is the firing order of a standard Inline 6 engine?",
+      "o": ["1-2-3-4-5-6", "1-6-2-4-3-5", "1-5-3-6-2-4", "1-4-2-6-3-5"],
+      "a": 2
+    },
+    {
+      "q": "Why is the Inline 6 considered 'perfectly balanced'?",
+      "o": ["It's very long", "Secondary vibrations are cancelled", "It only has 6 parts", "It uses VVT"],
+      "a": 1
+    },
+    {
+      "q": "What is the specific purpose of a Flywheel?",
+      "o": ["To cool the clutch", "To store kinetic energy/smooth pulses", "To open exhaust valves", "To inject fuel"],
+      "a": 1
+    },
+    {
+      "q": "The Lanchester balance shaft system is common in which engine?",
+      "o": ["V8", "Rotary", "Inline 4", "Boxer"],
+      "a": 2
+    },
+    {
+      "q": "In a 4-stroke cycle, what follows the compression stroke?",
+      "o": ["Intake", "Exhaust", "Power", "Ignition"],
+      "a": 2
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Rev — Your expert-level 3D engine assistant. Ask about cylinders, turbos, firing orders, and more. Instant technical answers from the Revora database.">
+  <title>Rev - Engine Assistant</title>
+  <link rel="icon" href="assets/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/assistant.css">
+</head>
+<body style="background-color: #0A0E17; min-height: 100vh;">
+
+  <!-- SIDEBAR NAVIGATION -->
+  <div class="sidebar">
+    <div class="logo-area">
+      <a href="index.html">
+        <img src="assets/logo.png" alt="Revora Logo" class="logo-img">
+      </a>
+      <div class="logo-sub" style="color:var(--blue); text-shadow: 0 0 10px rgba(56, 189, 248, 0.3);">Cyber-Engine v4.4 (LTS)</div>
+    </div>
+    
+    <div class="nav-links">
+      <a class="nav" href="index.html"><span>🏠</span> Home</a>
+      <a class="nav" href="engines.html"><span>🏎️</span> Engines</a>
+      <a class="nav" href="parts.html"><span>🔩</span> Parts</a>
+      <a class="nav" href="compare.html"><span>⚖️</span> Compare Engines</a>
+      <a class="nav" href="compare-parts.html"><span>🛠️</span> Compare Parts</a>
+      <a class="nav" href="quiz.html"><span>🧠</span> Quiz</a>
+      <a class="nav active" href="assistant.html"><span>🤖</span> Assistant</a>
+      <a class="nav" href="about.html"><span>ℹ️</span> About</a>
+    </div>
+
+    <div class="user-profile">
+      <div class="avatar">👨‍💻</div>
+      <div class="user-info">
+        <div class="name">Code Jammers</div>
+        <div class="role">Admin Mode</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="assistant-container">
+      
+      <div class="chat-header">
+        <div class="page-tag">MISSION CONTROL // CORE A.I.</div>
+        <h1>Rev: Technical Encylopedia</h1>
+        <p>Expert-level engineering database online. Analyzing powertrain systems in real-time.</p>
+      </div>
+
+      <div class="chat-messages" id="chat-messages">
+        <!-- Welcome Message -->
+        <div class="message bot-msg">
+          Initializing **Rev Cyber-Edition v4.4**... System online. <br/><br/>
+          I am your engineering encyclopedia. I have detailed data on over 45 engine components and technical concepts. What complex system shall we analyze today?
+        </div>
+      </div>
+
+      <div class="suggestions-row" id="suggestions">
+        <div class="suggest-tag">VVT</div>
+        <div class="suggest-tag">Wastegate</div>
+        <div class="suggest-tag">Boxer Engine</div>
+        <div class="suggest-tag">Compression Ratio</div>
+        <div class="suggest-tag">Flywheel</div>
+      </div>
+
+      <div class="chat-input-wrapper">
+        <input type="text" class="chat-input" id="chat-input" placeholder="Query technical database..." autocomplete="off">
+        <button class="send-btn" id="send-btn">➤</button>
+      </div>
+
+      <div style="font-size: 11px; color:#475569; text-align:center; padding-bottom: 30px;">
+        <span id="suggest-text">Try asking: What is Variable Valve Timing?</span>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/assistant.js"></script>
+
+</body>
+</html>
