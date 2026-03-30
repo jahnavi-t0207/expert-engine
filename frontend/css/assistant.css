@@ -98,7 +98,7 @@
 
 /* BOT NAME BADGE */
 .bot-msg::before {
-  content: "REV v4.1";
+  content: "Aurex v4.1";
   position: absolute;
   top: -22px;
   left: 4px;

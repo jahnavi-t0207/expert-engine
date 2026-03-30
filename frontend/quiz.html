@@ -8,19 +8,430 @@
   <link rel="icon" href="assets/logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/quiz.css">
+ 
+  <style>
+    /* ── ROOT & RESET ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    :root {
+      --blue:    #38bdf8;
+      --purple:  #a78bfa;
+      --green:   #4ade80;
+      --yellow:  #fbbf24;
+      --red:     #f87171;
+      --bg:      #0A0E17;
+      --surface: rgba(255,255,255,0.04);
+      --border:  rgba(255,255,255,0.08);
+      --text:    #e2e8f0;
+      --muted:   #64748b;
+    }
+ 
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(at 10% 20%, rgba(56,189,248,0.07) 0px, transparent 50%),
+        radial-gradient(at 90% 80%, rgba(167,139,250,0.07) 0px, transparent 50%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+ 
+    /* ── SIDEBAR ──────────────────────────────────────── */
+    .sidebar {
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      width: 220px;
+      background: rgba(10,14,23,0.97);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 24px 16px;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+    .logo-area { margin-bottom: 32px; }
+    .logo-img { width: 44px; border-radius: 8px; }
+    .logo-sub { font-size: 10px; color: var(--blue); letter-spacing: 1px; margin-top: 6px; opacity: 0.8; }
+    .nav-links { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+    .nav {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border-radius: 10px;
+      color: #64748b; text-decoration: none;
+      font-size: 14px; font-weight: 500; transition: all 0.2s;
+    }
+    .nav:hover { background: rgba(255,255,255,0.05); color: #e2e8f0; }
+    .nav.active { background: rgba(251,191,36,0.1); color: var(--yellow); }
+    .user-profile {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px; border-radius: 12px;
+      background: var(--surface); border: 1px solid var(--border);
+      margin-top: 16px;
+    }
+    .avatar { font-size: 22px; }
+    .name { font-size: 13px; font-weight: 600; }
+    .role { font-size: 11px; color: var(--muted); }
+ 
+    /* ── MAIN ─────────────────────────────────────────── */
+    .main {
+      margin-left: 220px;
+      padding: 40px 48px;
+      min-height: 100vh;
+    }
+ 
+    /* ── PAGE HEADER ──────────────────────────────────── */
+    .page-header { margin-bottom: 40px; }
+    .page-tag {
+      font-size: 10px; letter-spacing: 3px;
+      text-transform: uppercase; font-weight: 700;
+      color: var(--yellow); margin-bottom: 8px;
+    }
+    .title {
+      font-size: 36px; font-weight: 800;
+      background: linear-gradient(135deg, #fff 0%, var(--yellow) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .page-header p { color: var(--muted); font-size: 15px; margin-top: 6px; }
+ 
+    /* ── SCREENS (JS toggles visibility) ─────────────── */
+    .screen { display: none; }
+    .screen.active { display: block; animation: fadeUp 0.4s ease; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+ 
+    /* ── DIFFICULTY SELECTOR ──────────────────────────── */
+    .diff-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 860px;
+    }
+    .diff-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 28px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .diff-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      opacity: 0; transition: opacity 0.3s;
+      border-radius: 20px;
+    }
+    .diff-card[data-level="easy"]::before   { background: radial-gradient(circle at 50% 0%, rgba(74,222,128,0.12), transparent 70%); }
+    .diff-card[data-level="medium"]::before { background: radial-gradient(circle at 50% 0%, rgba(251,191,36,0.12), transparent 70%); }
+    .diff-card[data-level="hard"]::before   { background: radial-gradient(circle at 50% 0%, rgba(248,113,113,0.12), transparent 70%); }
+    .diff-card:hover::before { opacity: 1; }
+    .diff-card:hover { transform: translateY(-6px); }
+    .diff-card[data-level="easy"]:hover   { border-color: rgba(74,222,128,0.4);  box-shadow: 0 16px 40px rgba(74,222,128,0.1); }
+    .diff-card[data-level="medium"]:hover { border-color: rgba(251,191,36,0.4);  box-shadow: 0 16px 40px rgba(251,191,36,0.1); }
+    .diff-card[data-level="hard"]:hover   { border-color: rgba(248,113,113,0.4); box-shadow: 0 16px 40px rgba(248,113,113,0.1); }
+ 
+    .diff-emoji { font-size: 40px; margin-bottom: 16px; display: block; }
+    .diff-label {
+      font-size: 10px; letter-spacing: 3px; font-weight: 700;
+      text-transform: uppercase; margin-bottom: 10px;
+    }
+    .diff-card[data-level="easy"]   .diff-label { color: var(--green); }
+    .diff-card[data-level="medium"] .diff-label { color: var(--yellow); }
+    .diff-card[data-level="hard"]   .diff-label { color: var(--red); }
+    .diff-card h2 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+    .diff-card p  { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .diff-meta {
+      display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap;
+    }
+    .diff-badge {
+      font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 600;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--muted);
+    }
+ 
+    /* ── QUIZ ACTIVE ──────────────────────────────────── */
+    .quiz-layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 32px;
+      max-width: 1000px;
+    }
+ 
+    /* Progress */
+    .quiz-topbar {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+    .q-counter {
+      font-size: 12px; letter-spacing: 2px; font-weight: 700;
+      color: var(--muted); text-transform: uppercase;
+    }
+    .q-counter span { color: var(--yellow); }
+    .timer-pill {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 20px; padding: 6px 14px;
+      font-size: 14px; font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    .timer-pill.urgent { border-color: rgba(248,113,113,0.5); color: var(--red); animation: shake 0.4s ease; }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      25%      { transform: translateX(-3px); }
+      75%      { transform: translateX(3px); }
+    }
+    .progress-track {
+      height: 4px; background: rgba(255,255,255,0.06);
+      border-radius: 4px; overflow: hidden; margin-bottom: 32px;
+    }
+    .progress-fill {
+      height: 100%; border-radius: 4px;
+      background: linear-gradient(90deg, var(--yellow), var(--blue));
+      transition: width 0.5s ease;
+    }
+ 
+    /* Question Card */
+    .question-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px;
+    }
+    .q-category {
+      font-size: 10px; letter-spacing: 3px; font-weight: 700;
+      text-transform: uppercase; color: var(--yellow);
+      margin-bottom: 16px;
+    }
+    .q-text {
+      font-size: 20px; font-weight: 700;
+      line-height: 1.5; color: #fff;
+      margin-bottom: 28px;
+    }
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .option-btn {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      text-align: left;
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px; font-weight: 500;
+      color: #94a3b8;
+      transition: all 0.2s;
+      display: flex; align-items: center; gap: 12px;
+      position: relative; overflow: hidden;
+    }
+    .option-btn:hover:not(:disabled) {
+      border-color: rgba(56,189,248,0.4);
+      color: var(--blue);
+      background: rgba(56,189,248,0.06);
+      transform: translateY(-2px);
+    }
+    .option-btn.correct {
+      border-color: var(--green) !important;
+      background: rgba(74,222,128,0.1) !important;
+      color: var(--green) !important;
+    }
+    .option-btn.wrong {
+      border-color: var(--red) !important;
+      background: rgba(248,113,113,0.1) !important;
+      color: var(--red) !important;
+    }
+    .option-btn:disabled { cursor: default; }
+    .opt-letter {
+      width: 26px; height: 26px; border-radius: 8px;
+      background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800; flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    .option-btn.correct .opt-letter { background: var(--green); color: #000; border-color: var(--green); }
+    .option-btn.wrong   .opt-letter { background: var(--red);   color: #fff; border-color: var(--red); }
+ 
+    /* Feedback */
+    .feedback-box {
+      margin-top: 20px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      font-size: 14px; line-height: 1.6;
+      display: none;
+    }
+    .feedback-box.correct { background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.25); color: var(--green); }
+    .feedback-box.wrong   { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.25); color: #f8a4a4; }
+    .feedback-icon { font-size: 18px; margin-right: 6px; }
+ 
+    /* Next button */
+    .next-btn {
+      margin-top: 20px;
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, var(--yellow), #f59e0b);
+      color: #0A0E17;
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px; font-weight: 800;
+      letter-spacing: 2px; text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: none;
+    }
+    .next-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(251,191,36,0.3); }
+ 
+    /* ── SIDEBAR SCOREBOARD ───────────────────────────── */
+    .score-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      position: sticky;
+      top: 40px;
+    }
+    .score-panel h3 {
+      font-size: 11px; letter-spacing: 3px; font-weight: 700;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 20px;
+    }
+    .score-big {
+      font-size: 52px; font-weight: 800;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--yellow), var(--blue));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 4px;
+    }
+    .score-label { font-size: 12px; color: var(--muted); margin-bottom: 24px; }
+    .stat-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-key { color: var(--muted); }
+    .stat-val { font-weight: 700; }
+ 
+    .streak-bar {
+      display: flex; gap: 6px; flex-wrap: wrap; margin-top: 20px;
+    }
+    .streak-dot {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      transition: all 0.3s;
+    }
+    .streak-dot.correct { background: rgba(74,222,128,0.15); border-color: rgba(74,222,128,0.4); }
+    .streak-dot.wrong   { background: rgba(248,113,113,0.15); border-color: rgba(248,113,113,0.4); }
+ 
+    /* ── RESULT SCREEN ────────────────────────────────── */
+    .result-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .grade-ring {
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      margin: 0 auto 32px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 72px; font-weight: 900;
+      position: relative;
+    }
+    .grade-ring::before {
+      content: '';
+      position: absolute; inset: -4px;
+      border-radius: 50%;
+      padding: 4px;
+    }
+    .grade-S .grade-ring { background: rgba(251,191,36,0.1); color: var(--yellow); box-shadow: 0 0 60px rgba(251,191,36,0.3); }
+    .grade-A .grade-ring { background: rgba(56,189,248,0.1);  color: var(--blue);   box-shadow: 0 0 60px rgba(56,189,248,0.3); }
+    .grade-B .grade-ring { background: rgba(74,222,128,0.1);  color: var(--green);  box-shadow: 0 0 60px rgba(74,222,128,0.3); }
+    .grade-C .grade-ring { background: rgba(167,139,250,0.1); color: var(--purple); box-shadow: 0 0 60px rgba(167,139,250,0.3); }
+    .grade-D .grade-ring { background: rgba(248,113,113,0.1); color: var(--red);    box-shadow: 0 0 60px rgba(248,113,113,0.3); }
+ 
+    .result-title { font-size: 34px; font-weight: 800; margin-bottom: 8px; color: #fff; }
+    .result-sub   { font-size: 16px; color: var(--muted); margin-bottom: 32px; }
+ 
+    .result-stats {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 16px; margin-bottom: 36px;
+    }
+    .res-stat {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 20px;
+    }
+    .res-stat-val { font-size: 28px; font-weight: 800; }
+    .res-stat-lbl { font-size: 11px; color: var(--muted); letter-spacing: 1px; margin-top: 4px; }
+ 
+    .result-btns { display: flex; gap: 12px; justify-content: center; }
+    .result-btn {
+      padding: 14px 32px; border-radius: 12px; border: none;
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px; font-weight: 800; letter-spacing: 1.5px;
+      text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+    }
+    .primary-btn {
+      background: linear-gradient(135deg, var(--yellow), #f59e0b);
+      color: #0A0E17;
+    }
+    .primary-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(251,191,36,0.3); }
+    .secondary-btn {
+      background: var(--surface); border: 1px solid var(--border); color: var(--text);
+    }
+    .secondary-btn:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.07); }
+    .back-btn {
+      background: transparent; border: 1px solid var(--border); color: var(--muted);
+    }
+    .back-btn:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+ 
+    .review-grid {
+      text-align: left; margin-bottom: 36px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .review-item {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 14px 18px;
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .review-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+    .review-q { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+    .review-a { font-size: 12px; color: var(--muted); }
+    .review-a span { color: var(--green); font-weight: 600; }
+ 
+    /* ── RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 900px) {
+      .quiz-layout { grid-template-columns: 1fr; }
+      .score-panel { position: static; }
+      .diff-grid { grid-template-columns: 1fr; }
+      .options-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; padding: 24px 16px; }
+      .result-stats { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
-<body style="background-color: #0A0E17; min-height: 100vh;">
-
-  <!-- SIDEBAR NAVIGATION -->
+<body>
+ 
+  <!-- SIDEBAR -->
   <div class="sidebar">
     <div class="logo-area">
       <a href="index.html">
         <img src="assets/logo.png" alt="Revora Logo" class="logo-img">
       </a>
-      <div class="logo-sub" style="color:var(--blue); text-shadow: 0 0 10px rgba(56, 189, 248, 0.3);">Cyber-Engine v4.4 (LTS)</div>
+      <div class="logo-sub">Cyber-Engine v4.4 (LTS)</div>
     </div>
-    
     <div class="nav-links">
       <a class="nav" href="index.html"><span>🏠</span> Home</a>
       <a class="nav" href="engines.html"><span>🏎️</span> Engines</a>
@@ -31,7 +442,6 @@
       <a class="nav" href="assistant.html"><span>🤖</span> Assistant</a>
       <a class="nav" href="about.html"><span>ℹ️</span> About</a>
     </div>
-
     <div class="user-profile">
       <div class="avatar">👨‍💻</div>
       <div class="user-info">
@@ -40,58 +450,540 @@
       </div>
     </div>
   </div>
-
+ 
+  <!-- MAIN -->
   <div class="main">
+ 
     <div class="page-header">
       <div class="page-tag">TRAINING CENTER</div>
       <h1 class="title">Engine Knowledge Quiz</h1>
       <p>Challenge yourself and scale the expertise ladder. Select a level to begin.</p>
     </div>
-
-    <div class="quiz-container">
-      
-      <!-- Difficulty Selection -->
-      <div class="difficulty-selector">
-        <div class="diff-card" data-level="easy">
-          <h2>Easy</h2>
-          <p>For apprentices. Basic components and simple engine layouts.</p>
+ 
+    <!-- ① DIFFICULTY PICKER ─────────────────────────── -->
+    <div id="screen-diff" class="screen active">
+      <div class="diff-grid">
+ 
+        <div class="diff-card" data-level="easy" onclick="startQuiz('easy')">
+          <span class="diff-emoji">🔧</span>
+          <div class="diff-label">Easy</div>
+          <h2>Apprentice</h2>
+          <p>Basic components and simple engine layouts. Perfect if you're just getting started.</p>
+          <div class="diff-meta">
+            <span class="diff-badge">5 Questions</span>
+            <span class="diff-badge">30s / Q</span>
+            <span class="diff-badge">No Pressure</span>
+          </div>
         </div>
-        <div class="diff-card" data-level="medium">
-          <h2>Medium</h2>
-          <p>For mechanics. Dynamics, synchronization, and valve theory.</p>
+ 
+        <div class="diff-card" data-level="medium" onclick="startQuiz('medium')">
+          <span class="diff-emoji">⚙️</span>
+          <div class="diff-label">Medium</div>
+          <h2>Mechanic</h2>
+          <p>Valve theory, synchronization, and engine dynamics. You know your way around a workshop.</p>
+          <div class="diff-meta">
+            <span class="diff-badge">5 Questions</span>
+            <span class="diff-badge">20s / Q</span>
+            <span class="diff-badge">Moderate</span>
+          </div>
         </div>
-        <div class="diff-card" data-level="hard">
-          <h2>Hard</h2>
-          <p>For lead engineers. Advanced firing orders and technical details.</p>
+ 
+        <div class="diff-card" data-level="hard" onclick="startQuiz('hard')">
+          <span class="diff-emoji">🏎️</span>
+          <div class="diff-label">Hard</div>
+          <h2>Lead Engineer</h2>
+          <p>Advanced firing orders, thermal dynamics, and precision specs. Only the sharpest survive.</p>
+          <div class="diff-meta">
+            <span class="diff-badge">5 Questions</span>
+            <span class="diff-badge">15s / Q</span>
+            <span class="diff-badge">Intense</span>
+          </div>
         </div>
+ 
       </div>
-
-      <!-- Active Quiz Content -->
-      <div class="quiz-active">
-        <div class="progress-container">
-          <div class="progress-fill"></div>
-        </div>
-        <div class="page-tag" style="margin-bottom: 20px;"><span>QUESTION 1/5</span></div>
-        <div class="question-card" id="question-card">
-          <!-- Content injected via JS -->
-        </div>
-      </div>
-
-      <!-- Result Screen -->
-      <div class="result-screen">
-        <div class="grade-badge">S</div>
-        <h1>SCORE: 5/5</h1>
-        <p>Perfect completion accuracy. You've mastered this tier.</p>
-        <div class="result-btns">
-          <button class="result-btn primary-btn" onclick="restartQuiz()">RETAKE TEST</button>
-          <button class="result-btn secondary-btn" onclick="window.location.href='parts.html'">GO STUDY</button>
-        </div>
-      </div>
-
     </div>
-  </div>
-
-  <script src="js/quiz.js"></script>
-
+ 
+    <!-- ② QUIZ ACTIVE ───────────────────────────────── -->
+    <div id="screen-quiz" class="screen">
+      <div class="quiz-layout">
+ 
+        <!-- LEFT: Question -->
+        <div>
+          <div class="quiz-topbar">
+            <div class="q-counter">Question <span id="q-num">1</span> / <span id="q-total">5</span></div>
+            <div class="timer-pill" id="timer-pill">⏱ <span id="timer-val">30</span>s</div>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+          </div>
+ 
+          <div class="question-card">
+            <div class="q-category" id="q-category">COMPONENTS</div>
+            <div class="q-text" id="q-text">Loading...</div>
+            <div class="options-grid" id="options-grid"></div>
+            <div class="feedback-box" id="feedback-box"></div>
+            <button class="next-btn" id="next-btn" onclick="nextQuestion()">
+              Next Question →
+            </button>
+          </div>
+        </div>
+ 
+        <!-- RIGHT: Score Panel -->
+        <div>
+          <div class="score-panel">
+            <h3>Live Scorecard</h3>
+            <div class="score-big" id="live-score">0</div>
+            <div class="score-label">points</div>
+            <div class="stat-row"><span class="stat-key">Correct</span><span class="stat-val" id="stat-correct" style="color:var(--green)">0</span></div>
+            <div class="stat-row"><span class="stat-key">Wrong</span><span class="stat-val" id="stat-wrong" style="color:var(--red)">0</span></div>
+            <div class="stat-row"><span class="stat-key">Accuracy</span><span class="stat-val" id="stat-acc">—</span></div>
+            <div class="stat-row"><span class="stat-key">Best Streak</span><span class="stat-val" id="stat-streak" style="color:var(--yellow)">0</span></div>
+            <div class="streak-bar" id="streak-bar"></div>
+          </div>
+        </div>
+ 
+      </div>
+    </div>
+ 
+    <!-- ③ RESULT ─────────────────────────────────────── -->
+    <div id="screen-result" class="screen">
+      <div class="result-wrap">
+        <div id="grade-wrap">
+          <div class="grade-ring" id="grade-ring">S</div>
+        </div>
+        <div class="result-title" id="result-title">PERFECT RUN</div>
+        <div class="result-sub" id="result-sub">5/5 correct — You've mastered this tier.</div>
+ 
+        <div class="result-stats">
+          <div class="res-stat">
+            <div class="res-stat-val" id="res-score">0</div>
+            <div class="res-stat-lbl">TOTAL SCORE</div>
+          </div>
+          <div class="res-stat">
+            <div class="res-stat-val" id="res-acc">0%</div>
+            <div class="res-stat-lbl">ACCURACY</div>
+          </div>
+          <div class="res-stat">
+            <div class="res-stat-val" id="res-time">0s</div>
+            <div class="res-stat-lbl">AVG TIME</div>
+          </div>
+        </div>
+ 
+        <div class="review-grid" id="review-grid"></div>
+ 
+        <div class="result-btns">
+          <button class="result-btn primary-btn" onclick="retakeQuiz()">↺ RETAKE TEST</button>
+          <button class="result-btn secondary-btn" onclick="window.location.href='parts.html'">📚 GO STUDY</button>
+          <button class="result-btn back-btn" onclick="showDiff()">← CHANGE LEVEL</button>
+        </div>
+      </div>
+    </div>
+ 
+  </div><!-- /main -->
+ 
+  <script>
+  // ─────────────────────────────────────────────────────
+  //  QUESTION BANK
+  // ─────────────────────────────────────────────────────
+  const QUESTIONS = {
+    easy: [
+      {
+        category: 'ENGINE TYPES',
+        q: 'Which engine type has all cylinders arranged in a single straight row?',
+        opts: ['V-Type', 'Inline', 'Boxer', 'Rotary'],
+        ans: 1,
+        explain: 'An Inline engine arranges all cylinders in a single straight line — common examples are the Inline-4 and Inline-6.'
+      },
+      {
+        category: 'COMPONENTS',
+        q: 'What does a spark plug do in a petrol engine?',
+        opts: ['Filters air into the engine', 'Ignites the fuel-air mixture', 'Pumps engine oil', 'Controls valve timing'],
+        ans: 1,
+        explain: 'The spark plug fires a high-voltage electrical spark at the top of the compression stroke to ignite the compressed fuel-air mixture.'
+      },
+      {
+        category: 'ENGINE CYCLE',
+        q: 'How many strokes does a standard car engine complete in one full cycle?',
+        opts: ['2', '3', '4', '6'],
+        ans: 2,
+        explain: 'A standard car engine uses the 4-stroke cycle: Intake → Compression → Power → Exhaust.'
+      },
+      {
+        category: 'COMPONENTS',
+        q: 'What is the primary function of the crankshaft?',
+        opts: ['Store fuel', 'Filter exhaust gases', 'Convert piston motion into rotation', 'Cool the engine'],
+        ans: 2,
+        explain: 'The crankshaft converts the up-and-down linear motion of the pistons into rotational motion that ultimately drives the wheels.'
+      },
+      {
+        category: 'ENGINE TYPES',
+        q: 'The V8 engine has cylinders arranged in which configuration?',
+        opts: ['One straight row', 'Two rows in a V-shape', 'Two flat opposing rows', 'A circular layout'],
+        ans: 1,
+        explain: 'A V8 has 8 cylinders arranged in two banks of 4, forming a "V" shape when viewed from the front.'
+      }
+    ],
+    medium: [
+      {
+        category: 'VALVETRAIN',
+        q: 'What does DOHC stand for?',
+        opts: ['Dual Output High Compression', 'Double Overhead Camshaft', 'Direct Override Hydraulic Control', 'Dynamic Oil Heat Cycle'],
+        ans: 1,
+        explain: 'DOHC stands for Double Overhead Camshaft — two camshafts sit on top of the cylinder head, one controlling intake valves and one controlling exhaust valves.'
+      },
+      {
+        category: 'PERFORMANCE',
+        q: 'What is the primary role of a turbocharger?',
+        opts: ['Reduce exhaust emissions', 'Cool the engine coolant', 'Force more air into the engine for more power', 'Smooth out vibrations'],
+        ans: 2,
+        explain: 'A turbocharger uses exhaust gases to spin a turbine that compresses intake air, forcing more oxygen into the cylinders — allowing more fuel to burn and produce more power.'
+      },
+      {
+        category: 'SYNCHRONIZATION',
+        q: 'What is the purpose of the timing belt or timing chain?',
+        opts: ['Connect the battery to the starter', 'Synchronize crankshaft and camshaft rotation', 'Drive the power steering pump', 'Circulate coolant'],
+        ans: 1,
+        explain: 'The timing belt/chain keeps the crankshaft and camshaft spinning in perfect sync at a 2:1 ratio, ensuring valves open and close at precisely the right moment.'
+      },
+      {
+        category: 'ENGINE PHYSICS',
+        q: 'A higher compression ratio generally results in:',
+        opts: ['Lower power output', 'Greater thermal efficiency and power', 'Reduced engine temperature', 'Slower engine speed'],
+        ans: 1,
+        explain: 'A higher compression ratio squeezes the air-fuel mixture more tightly before ignition, extracting more energy from each combustion event — increasing efficiency and power.'
+      },
+      {
+        category: 'COMPONENTS',
+        q: 'What does Variable Valve Timing (VVT) allow an engine to do?',
+        opts: ['Change the number of cylinders', 'Adjust when valves open and close based on RPM', 'Switch between petrol and diesel', 'Vary the bore size'],
+        ans: 1,
+        explain: 'VVT adjusts the timing of intake/exhaust valve opening depending on engine speed, optimising power at high RPM and efficiency at low RPM.'
+      }
+    ],
+    hard: [
+      {
+        category: 'FIRING ORDER',
+        q: 'What is the standard firing order of an Inline-6 engine?',
+        opts: ['1-2-3-4-5-6', '1-5-3-6-2-4', '1-4-2-5-3-6', '1-6-2-5-3-4'],
+        ans: 1,
+        explain: 'The Inline-6 firing order 1-5-3-6-2-4 ensures power strokes are spaced 120° apart, achieving perfect primary and secondary balance — the reason engineers call it the "perfect" engine.'
+      },
+      {
+        category: 'THERMODYNAMICS',
+        q: 'Which engine cycle describes the operation of most petrol engines?',
+        opts: ['Diesel Cycle', 'Atkinson Cycle', 'Otto Cycle', 'Rankine Cycle'],
+        ans: 2,
+        explain: 'The Otto Cycle (named after Nikolaus Otto) describes the thermodynamic cycle of a spark-ignition engine: isentropic compression, constant-volume heat addition, isentropic expansion, and constant-volume heat rejection.'
+      },
+      {
+        category: 'ROTARY ENGINES',
+        q: 'In a Wankel rotary engine, what replaces the reciprocating pistons?',
+        opts: ['Turbine blades', 'Triangular rotors', 'Oscillating discs', 'Elliptical cams'],
+        ans: 1,
+        explain: 'The Wankel engine uses a triangular rotor that rotates eccentrically within an epitrochoid-shaped housing, completing the 4 thermodynamic strokes with a smooth rotary motion instead of reciprocating pistons.'
+      },
+      {
+        category: 'ADVANCED SPECS',
+        q: 'The V8 Inline-4 firing order 1-3-4-2 refers to which engine layout?',
+        opts: ['V8 configuration', 'Inline-4 configuration', 'Boxer-4 configuration', 'V6 configuration'],
+        ans: 1,
+        explain: 'The 1-3-4-2 firing order is characteristic of the Inline-4 engine — it fires cylinders out of sequence to balance power pulses and minimise vibration.'
+      },
+      {
+        category: 'ENGINEERING',
+        q: 'What is "bore" in the context of engine specifications?',
+        opts: ['The length of the connecting rod', 'The distance the piston travels', 'The internal diameter of a cylinder', 'The angle of the V-configuration'],
+        ans: 2,
+        explain: 'Bore is the internal diameter of the cylinder. Together with "stroke" (piston travel distance), it determines engine displacement: Displacement = (π/4) × bore² × stroke × number of cylinders.'
+      }
+    ]
+  };
+ 
+  // ─────────────────────────────────────────────────────
+  //  STATE
+  // ─────────────────────────────────────────────────────
+  let currentLevel   = 'easy';
+  let questions      = [];
+  let qIndex         = 0;
+  let score          = 0;
+  let correct        = 0;
+  let wrong          = 0;
+  let streak         = 0;
+  let bestStreak     = 0;
+  let answered       = false;
+  let timerInterval  = null;
+  let timeLeft       = 30;
+  let timeLimits     = { easy: 30, medium: 20, hard: 15 };
+  let timeUsed       = [];
+  let results        = [];
+ 
+  // ─────────────────────────────────────────────────────
+  //  SCREEN MANAGEMENT
+  // ─────────────────────────────────────────────────────
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+  function showDiff()  { showScreen('screen-diff'); }
+ 
+  // ─────────────────────────────────────────────────────
+  //  START QUIZ
+  // ─────────────────────────────────────────────────────
+  function startQuiz(level) {
+    currentLevel = level;
+    questions    = [...QUESTIONS[level]].sort(() => Math.random() - 0.5);
+    qIndex       = 0;
+    score        = 0;
+    correct      = 0;
+    wrong        = 0;
+    streak       = 0;
+    bestStreak   = 0;
+    timeUsed     = [];
+    results      = [];
+ 
+    // reset score panel
+    updateScorePanel();
+    document.getElementById('streak-bar').innerHTML = '';
+ 
+    showScreen('screen-quiz');
+    renderQuestion();
+  }
+ 
+  // ─────────────────────────────────────────────────────
+  //  RENDER QUESTION
+  // ─────────────────────────────────────────────────────
+  function renderQuestion() {
+    answered = false;
+    const q = questions[qIndex];
+    const total = questions.length;
+ 
+    // Top bar
+    document.getElementById('q-num').textContent   = qIndex + 1;
+    document.getElementById('q-total').textContent = total;
+    document.getElementById('progress-fill').style.width = (qIndex / total * 100) + '%';
+ 
+    // Question text
+    document.getElementById('q-category').textContent = q.category;
+    document.getElementById('q-text').textContent = q.q;
+ 
+    // Options
+    const grid = document.getElementById('options-grid');
+    grid.innerHTML = '';
+    const letters = ['A', 'B', 'C', 'D'];
+    q.opts.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.innerHTML = `<span class="opt-letter">${letters[i]}</span>${opt}`;
+      btn.onclick = () => selectAnswer(i, btn);
+      grid.appendChild(btn);
+    });
+ 
+    // Feedback & next
+    const fb = document.getElementById('feedback-box');
+    fb.style.display = 'none';
+    fb.className = 'feedback-box';
+    document.getElementById('next-btn').style.display = 'none';
+ 
+    // Timer
+    startTimer();
+  }
+ 
+  // ─────────────────────────────────────────────────────
+  //  TIMER
+  // ─────────────────────────────────────────────────────
+  function startTimer() {
+    clearInterval(timerInterval);
+    timeLeft = timeLimits[currentLevel];
+    const timerEl = document.getElementById('timer-val');
+    const pill    = document.getElementById('timer-pill');
+    timerEl.textContent = timeLeft;
+    pill.classList.remove('urgent');
+ 
+    const startTime = Date.now();
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      timerEl.textContent = timeLeft;
+      if (timeLeft <= 5) pill.classList.add('urgent');
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        timeUsed.push(timeLimits[currentLevel]);
+        autoFail();
+      }
+    }, 1000);
+  }
+ 
+  function autoFail() {
+    if (answered) return;
+    answered = true;
+    const q = questions[qIndex];
+    const buttons = document.querySelectorAll('.option-btn');
+    buttons.forEach(b => b.disabled = true);
+    buttons[q.ans].classList.add('correct');
+ 
+    streak = 0;
+    wrong++;
+    results.push({ q: q.q, correct: false, correctAns: q.opts[q.ans] });
+    addStreakDot(false);
+    showFeedback(false, '⏰ Time\'s up! ' + q.explain);
+    updateScorePanel();
+    document.getElementById('next-btn').style.display = 'block';
+  }
+ 
+  // ─────────────────────────────────────────────────────
+  //  SELECT ANSWER
+  // ─────────────────────────────────────────────────────
+  function selectAnswer(i, btn) {
+    if (answered) return;
+    answered = true;
+    clearInterval(timerInterval);
+    timeUsed.push(timeLimits[currentLevel] - timeLeft);
+ 
+    const q = questions[qIndex];
+    const buttons = document.querySelectorAll('.option-btn');
+    buttons.forEach(b => b.disabled = true);
+ 
+    const isCorrect = i === q.ans;
+ 
+    if (isCorrect) {
+      btn.classList.add('correct');
+      const points = calcPoints();
+      score  += points;
+      correct++;
+      streak++;
+      if (streak > bestStreak) bestStreak = streak;
+      results.push({ q: q.q, correct: true, correctAns: q.opts[q.ans] });
+      addStreakDot(true);
+      showFeedback(true, `✅ Correct! +${points} pts — ${q.explain}`);
+    } else {
+      btn.classList.add('wrong');
+      buttons[q.ans].classList.add('correct');
+      streak = 0;
+      wrong++;
+      results.push({ q: q.q, correct: false, correctAns: q.opts[q.ans] });
+      addStreakDot(false);
+      showFeedback(false, `❌ Not quite. ${q.explain}`);
+    }
+ 
+    updateScorePanel();
+    document.getElementById('next-btn').style.display = 'block';
+  }
+ 
+  function calcPoints() {
+    const base    = { easy: 100, medium: 150, hard: 200 }[currentLevel];
+    const timeBonus = Math.max(0, timeLeft) * 5;
+    const streakBonus = streak > 1 ? (streak - 1) * 20 : 0;
+    return base + timeBonus + streakBonus;
+  }
+ 
+  // ─────────────────────────────────────────────────────
+  //  FEEDBACK
+  // ─────────────────────────────────────────────────────
+  function showFeedback(isCorrect, text) {
+    const fb = document.getElementById('feedback-box');
+    fb.className = 'feedback-box ' + (isCorrect ? 'correct' : 'wrong');
+    fb.textContent = text;
+    fb.style.display = 'block';
+  }
+ 
+  // ─────────────────────────────────────────────────────
+  //  STREAK DOTS
+  // ─────────────────────────────────────────────────────
+  function addStreakDot(isCorrect) {
+    const bar = document.getElementById('streak-bar');
+    const dot = document.createElement('div');
+    dot.className = 'streak-dot ' + (isCorrect ? 'correct' : 'wrong');
+    dot.textContent = isCorrect ? '✓' : '✗';
+    bar.appendChild(dot);
+  }
+ 
+  // ─────────────────────────────────────────────────────
+  //  SCORE PANEL
+  // ─────────────────────────────────────────────────────
+  function updateScorePanel() {
+    document.getElementById('live-score').textContent   = score;
+    document.getElementById('stat-correct').textContent = correct;
+    document.getElementById('stat-wrong').textContent   = wrong;
+    const total = correct + wrong;
+    document.getElementById('stat-acc').textContent = total > 0 ? Math.round(correct / total * 100) + '%' : '—';
+    document.getElementById('stat-streak').textContent = bestStreak;
+  }
+ 
+  // ─────────────────────────────────────────────────────
+  //  NEXT QUESTION
+  // ─────────────────────────────────────────────────────
+  function nextQuestion() {
+    qIndex++;
+    if (qIndex >= questions.length) {
+      showResults();
+    } else {
+      renderQuestion();
+    }
+  }
+ 
+  // ─────────────────────────────────────────────────────
+  //  RESULTS
+  // ─────────────────────────────────────────────────────
+  function showResults() {
+    clearInterval(timerInterval);
+ 
+    const total    = questions.length;
+    const accuracy = Math.round(correct / total * 100);
+    const avgTime  = timeUsed.length ? Math.round(timeUsed.reduce((a,b)=>a+b,0)/timeUsed.length) : 0;
+ 
+    // Grade
+    let grade, gradeClass, title, sub;
+    if (accuracy === 100) {
+      grade = 'S'; gradeClass = 'grade-S';
+      title = 'PERFECT RUN'; sub = `${correct}/${total} correct — You've mastered this tier.`;
+    } else if (accuracy >= 80) {
+      grade = 'A'; gradeClass = 'grade-A';
+      title = 'EXCELLENT WORK'; sub = `${correct}/${total} correct — Nearly flawless performance.`;
+    } else if (accuracy >= 60) {
+      grade = 'B'; gradeClass = 'grade-B';
+      title = 'SOLID EFFORT'; sub = `${correct}/${total} correct — A few gaps to plug.`;
+    } else if (accuracy >= 40) {
+      grade = 'C'; gradeClass = 'grade-C';
+      title = 'KEEP STUDYING'; sub = `${correct}/${total} correct — Hit the blueprint library.`;
+    } else {
+      grade = 'D'; gradeClass = 'grade-D';
+      title = 'BACK TO BASICS'; sub = `${correct}/${total} correct — Let's revisit the fundamentals.`;
+    }
+ 
+    // DOM updates
+    const ring = document.getElementById('grade-ring');
+    ring.textContent = grade;
+    ring.parentElement.className = gradeClass;
+ 
+    document.getElementById('result-title').textContent = title;
+    document.getElementById('result-sub').textContent   = sub;
+    document.getElementById('res-score').textContent    = score;
+    document.getElementById('res-acc').textContent      = accuracy + '%';
+    document.getElementById('res-time').textContent     = avgTime + 's';
+ 
+    // Review grid
+    const grid = document.getElementById('review-grid');
+    grid.innerHTML = '';
+    results.forEach((r, idx) => {
+      const item = document.createElement('div');
+      item.className = 'review-item';
+      item.innerHTML = `
+        <span class="review-icon">${r.correct ? '✅' : '❌'}</span>
+        <div>
+          <div class="review-q">Q${idx+1}: ${r.q}</div>
+          ${!r.correct ? `<div class="review-a">Correct answer: <span>${r.correctAns}</span></div>` : ''}
+        </div>
+      `;
+      grid.appendChild(item);
+    });
+ 
+    showScreen('screen-result');
+  }
+ 
+  // ─────────────────────────────────────────────────────
+  //  RETAKE
+  // ─────────────────────────────────────────────────────
+  function retakeQuiz() { startQuiz(currentLevel); }
+  </script>
+ 
 </body>
 </html>

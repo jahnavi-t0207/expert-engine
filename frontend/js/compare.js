@@ -14,8 +14,8 @@ async function fetchEngineData() {
         console.warn("[REVO-ENGINE] API Offline. Fetching local data cache...");
         try {
             // Fallback to the physical JSON file in the backend folder
-            // Note: In a real frontend-only env, this would be a relative path to a public asset
-            const fallback = await fetch('backend/data/engines.json');
+            // Use correct relative path from frontend directory
+            const fallback = await fetch('../backend/data/engines.json');
             engineData = await fallback.json();
         } catch (fbErr) {
             console.error("[REVO-ENGINE] Critical: Could not load engine data.", fbErr);
